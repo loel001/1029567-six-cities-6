@@ -24,5 +24,10 @@
   "engines": {
     "node": ">=12.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "install": "0.13.0",
+    "prop-types": "15.7.2",
+    "react": "16.14.0",
+    "react-dom": "16.14.0"
+  }
 }
