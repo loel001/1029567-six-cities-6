@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов» [![Build status][travis-image]][travis-url]
 
 * Студент: [Анна Подкасик](https://up.htmlacademy.ru/react/6/user/1029567).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Вохмянин](https://htmlacademy.ru/profile/id530823).
 
 ---
 
