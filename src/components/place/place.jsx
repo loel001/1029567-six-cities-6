@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Places = (props) => {
-
-  const {name} = props;
+const Place = (props) => {
 
   return (
     <article className="cities__place-card place-card">
@@ -40,7 +38,7 @@ const Places = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{name}</a>
+          <a href="#">{props.name}</a>
         </h2>
         <p className="place-card__type">Apartment</p>
       </div>
@@ -48,8 +46,8 @@ const Places = (props) => {
   );
 };
 
-Places.propTypes = {
+Place.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-export default Places;
+export default Place;

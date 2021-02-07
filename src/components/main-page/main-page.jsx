@@ -1,5 +1,5 @@
 import React from 'react';
-import Places from "../places/places";
+import Place from "../place/place";
 import PropTypes from 'prop-types';
 
 const MainPage = (props) => {
@@ -88,7 +88,7 @@ const MainPage = (props) => {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {props.names.map((name, i) => <Places key={name + i} name={name} />)}
+                {props.names.map((name, i) => <Place key={i} name={name} />)}
               </div>
             </section>
             <div className="cities__right-section">
