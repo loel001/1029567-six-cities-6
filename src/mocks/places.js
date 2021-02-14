@@ -1,4 +1,4 @@
-const AVATAR_URL = `https://i.pravatar.cc/128`;
+import {AVATAR_URL} from '../common/const';
 
 export default [
   {
@@ -31,7 +31,7 @@ export default [
     maxAdults: 4,
     previewImage: `img/apartment-01.jpg`,
     price: 120,
-    ratin: 4.8,
+    rating: 4.8,
     title: `Beautiful & luxurious studio at great location`,
     type: `Аpartment`
   }, {

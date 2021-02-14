@@ -1,4 +1,4 @@
-const AVATAR_URL = `https://i.pravatar.cc/128`;
+import {AVATAR_URL} from '../common/const';
 
 export default [
   {
