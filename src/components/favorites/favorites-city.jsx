@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {placesPropTypes} from "../../common/prop-types";
-import {getNumberStarts} from "../../common/utils";
+import {Link} from 'react-router-dom';
+import {placesPropTypes} from '../../common/prop-types';
+import {getNumberStarts} from '../../common/utils';
 
 const FavoritesCity = (props) => {
 
@@ -21,9 +22,9 @@ const FavoritesCity = (props) => {
           return (
             <article className="favorites__card place-card" key={place.id}>
               <div className="favorites__image-wrapper place-card__image-wrapper">
-                <a href="#">
+                <Link to={`/offer/` + place.id}>
                   <img className="place-card__image" src={place.previewImage} width="150" height="110" alt="Place image" />
-                </a>
+                </Link>
               </div>
               <div className="favorites__card-info place-card__info">
                 <div className="place-card__price-wrapper">
@@ -49,7 +50,7 @@ const FavoritesCity = (props) => {
                   </div>
                 </div>
                 <h2 className="place-card__name">
-                  <a href="#">{place.title}</a>
+                  <Link to={`/offer/` + place.id}>{place.title}</Link>
                 </h2>
                 <p className="place-card__type">{place.type}</p>
               </div>

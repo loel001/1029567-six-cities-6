@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {placePropTypes} from '../../common/prop-types';
 
@@ -9,6 +10,7 @@ const Place = (props) => {
   const {handleMouseEnter, handleMouseLeave, isActivePlace, place} = props;
 
   const {
+    id,
     isFavorite,
     isPremium,
     previewImage,
@@ -30,9 +32,9 @@ const Place = (props) => {
     <article className={`cities__place-card place-card ${isActivePlace ? `place-card--active` : ``}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       {isPremium ? renderIsPremium() : null}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={`/offer/` + id}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -61,7 +63,7 @@ const Place = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`/offer/` + id}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
