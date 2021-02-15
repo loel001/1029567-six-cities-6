@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {placePropTypes} from '../../common/prop-types';
 
 import {getNumberStarts} from '../../common/utils';
 
@@ -69,15 +70,7 @@ const Place = (props) => {
 };
 
 Place.propTypes = {
-  place: PropTypes.shape({
-    isFavorite: PropTypes.bool.isRequired,
-    isPremium: PropTypes.bool.isRequired,
-    previewImage: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    rating: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-  }).isRequired,
+  place: placePropTypes,
   handleMouseEnter: PropTypes.func.isRequired,
   handleMouseLeave: PropTypes.func.isRequired,
   isActivePlace: PropTypes.bool.isRequired

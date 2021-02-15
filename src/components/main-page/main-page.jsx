@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import PlaceList from "../place-list/place-list";
+import {placesPropTypes} from '../../common/prop-types';
+import PlaceList from '../place-list/place-list';
 
 const MainPage = (props) => {
 
@@ -103,15 +103,7 @@ const MainPage = (props) => {
 };
 
 MainPage.propTypes = {
-  places: PropTypes.arrayOf(PropTypes.shape({
-    isFavorite: PropTypes.bool.isRequired,
-    isPremium: PropTypes.bool.isRequired,
-    previewImage: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    rating: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-  })).isRequired,
+  places: placesPropTypes
 };
 
 export default MainPage;

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import Place from "../place/place";
-import PropTypes from 'prop-types';
+import Place from '../place/place';
+import placesPropTypes from '../../common/prop-types';
 
 const PlaceList = (props) => {
 
@@ -28,15 +28,7 @@ const PlaceList = (props) => {
 };
 
 PlaceList.propTypes = {
-  places: PropTypes.arrayOf(PropTypes.shape({
-    isFavorite: PropTypes.bool.isRequired,
-    isPremium: PropTypes.bool.isRequired,
-    previewImage: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    rating: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-  })).isRequired,
+  places: placesPropTypes
 };
 
 export default PlaceList;

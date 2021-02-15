@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {getNumberStarts} from "../../common/utils";
+import {reviewPropTypes} from '../../common/prop-types';
+import {getNumberStarts} from '../../common/utils';
 
 const Review = (props) => {
 
@@ -41,14 +41,7 @@ const Review = (props) => {
 };
 
 Review.propTypes = {
-  review: PropTypes.shape({
-    comment: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-    user: PropTypes.shape({
-      avatarUrl: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired
-    }).isRequired
-  }).isRequired
+  review: reviewPropTypes
 };
 
 export default Review;
