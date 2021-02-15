@@ -5,7 +5,7 @@ import {getNumberStarts} from '../../common/utils';
 
 const Place = (props) => {
 
-  const {place} = props;
+  const {handleMouseEnter, handleMouseLeave, isActivePlace, place} = props;
 
   const {
     isFavorite,
@@ -26,7 +26,7 @@ const Place = (props) => {
   };
 
   return (
-    <article className="cities__place-card place-card">
+    <article className={`cities__place-card place-card ${isActivePlace ? `place-card--active` : ``}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       {isPremium ? renderIsPremium() : null}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
@@ -77,7 +77,10 @@ Place.propTypes = {
     rating: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-  }).isRequired
+  }).isRequired,
+  handleMouseEnter: PropTypes.func.isRequired,
+  handleMouseLeave: PropTypes.func.isRequired,
+  isActivePlace: PropTypes.bool.isRequired
 };
 
 export default Place;
