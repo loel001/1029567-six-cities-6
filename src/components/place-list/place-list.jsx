@@ -5,7 +5,7 @@ import placesPropTypes from '../../common/prop-types';
 const PlaceList = (props) => {
 
   const {places} = props;
-  const [activePlaceId, getActivePlace] = useState(false);
+  const [activePlaceId, setActivePlace] = useState(false);
 
   const isActivePlace = (place) => place.id === activePlaceId;
 
@@ -14,10 +14,10 @@ const PlaceList = (props) => {
       {places.map((place) => (
         <Place
           handleMouseEnter={() => {
-            getActivePlace(place.id);
+            setActivePlace(place.id);
           }}
           handleMouseLeave={() => {
-            getActivePlace(null);
+            setActivePlace(null);
           }}
           isActivePlace={isActivePlace(place)}
           key={place.id}
