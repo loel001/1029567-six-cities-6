@@ -26,7 +26,7 @@ const App = (props) => {
             places={places}
           />
         </Route>
-        <Route exact path="/offer/:id?">
+        <Route exact path="/offer/:id">
           <Property
             places={places}
             reviews={reviews}

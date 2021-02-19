@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FavoritesEmty = () => {
+const FavoritesEmpty = () => {
 
   return (
     <div className="page page--favorites-empty">
@@ -47,4 +47,4 @@ const FavoritesEmty = () => {
   );
 };
 
-export default FavoritesEmty;
+export default FavoritesEmpty;
