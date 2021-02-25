@@ -1,9 +1,10 @@
 import React from 'react';
 import {placesPropTypes, reviewsPropTypes} from '../../common/prop-types';
-import Review from '../review/review';
-import {MAX_PROPERTY_IMAGES} from '../../common/const';
+import {MAX_PROPERTY_IMAGES, MAX_NUMBER_PIN} from '../../common/const';
 import {getNumberStarts} from '../../common/utils';
 import ReviewForm from '../review-form/review-form';
+import ReviewList from "../review-list/review-list";
+import Map from "../map/map";
 
 const Property = (props) => {
 
@@ -140,16 +141,16 @@ const Property = (props) => {
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ul className="reviews__list">
-                  {reviews.map((review, index) => (
-                    <Review key={index} review={review}/>
-                  ))}
-                </ul>
+                {
+                  (reviews.length > 0) &&
+                  <ReviewList reviews={reviews} />
+                }
                 <ReviewForm />
               </section>
             </div>
           </div>
           <section className="property__map map">
+            <Map places={places.slice(0, MAX_NUMBER_PIN)} />
           </section>
         </section>
         <div className="container">
