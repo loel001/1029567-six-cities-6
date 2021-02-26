@@ -48,6 +48,7 @@ const Favorites = (props) => {
                     key={city + index}
                     places={favoriteCityPlaces}
                     city={city}
+                    placeName="FAVORITES"
                   />
                 );
               })}

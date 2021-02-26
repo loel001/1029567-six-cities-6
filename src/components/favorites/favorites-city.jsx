@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {placesPropTypes} from '../../common/prop-types';
-import FavoritePlace from "../favorite-place/favorite-place";
+import Place from "../place/place";
 
 const FavoritesCity = (props) => {
 
-  const {places, city} = props;
+  const {places, city, placeName} = props;
 
   return (
     <li className="favorites__locations-items">
@@ -18,9 +18,11 @@ const FavoritesCity = (props) => {
       </div>
       <div className="favorites__places">
         {places.map((place) => (
-          <FavoritePlace
+          <Place
             key={place.id}
-            place={place}/>
+            place={place}
+            placeName={placeName}
+          />
         ))}
       </div>
     </li>
@@ -29,7 +31,8 @@ const FavoritesCity = (props) => {
 
 FavoritesCity.propTypes = {
   places: placesPropTypes,
-  city: PropTypes.string.isRequired
+  city: PropTypes.string.isRequired,
+  placeName: PropTypes.string.isRequired
 };
 
 export default FavoritesCity;

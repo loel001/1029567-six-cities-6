@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 import {placePropTypes} from '../../common/prop-types';
 
 import {getNumberStarts} from '../../common/utils';
+import {PlaceSettings} from '../../common/const';
 
 const Place = (props) => {
 
-  const {handleMouseEnter, handleMouseLeave, isActivePlace, place} = props;
+  const {handleMouseEnter, handleMouseLeave, isActivePlace, place, placeName} = props;
 
   const {
     id,
@@ -29,14 +30,14 @@ const Place = (props) => {
   };
 
   return (
-    <article className={`cities__place-card place-card ${isActivePlace ? `place-card--active` : ``}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <article className={`${PlaceSettings[placeName].article} place-card ${isActivePlace ? `place-card--active` : ``}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       {isPremium ? renderIsPremium() : null}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${PlaceSettings[placeName].image.imageClass} place-card__image-wrapper`}>
         <Link to={`/offer/` + id}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={previewImage} width={PlaceSettings[placeName].image.width} height={PlaceSettings[placeName].image.height} alt="Place image"/>
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={`${PlaceSettings[placeName].info} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -75,7 +76,8 @@ Place.propTypes = {
   place: placePropTypes,
   handleMouseEnter: PropTypes.func.isRequired,
   handleMouseLeave: PropTypes.func.isRequired,
-  isActivePlace: PropTypes.bool.isRequired
+  isActivePlace: PropTypes.bool.isRequired,
+  placeName: PropTypes.string.isRequired
 };
 
 export default Place;
