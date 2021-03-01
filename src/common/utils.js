@@ -8,3 +8,7 @@ export const formatString = (string) => {
 export const getNumberStarts = (rating) => {
   return `${rating / MAX_NUMBER_STARS * 100}%`;
 };
+
+export const getPlacesCity = (places, selectedCity) => {
+  return places.filter((place) => place.city.name === selectedCity);
+};
