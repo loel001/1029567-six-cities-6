@@ -11,8 +11,5 @@ export const ActionCreator = {
   }),
   getPlaces: () => ({
     type: ActionType.GET_PLACES,
-  }),
-  getFavoritePlaces: () => ({
-    type: ActionType.GET_FAVORITE_PLACES,
   })
 };

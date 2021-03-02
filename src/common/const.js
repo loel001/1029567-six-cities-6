@@ -33,3 +33,5 @@ export const PlaceSettings = {
     info: `favorites__card-info`
   }
 };
+
+export const CIIES = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`];

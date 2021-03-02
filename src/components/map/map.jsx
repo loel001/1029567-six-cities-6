@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
+import {connect} from 'react-redux';
 import leaflet from 'leaflet';
 import "leaflet/dist/leaflet.css";
 import {placesPropTypes} from "../../common/prop-types";
@@ -62,9 +63,16 @@ const Map = (props) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  activeCity: state.activeCity,
+  places: state.places
+});
+
 Map.propTypes = {
   places: placesPropTypes
 };
 
 
-export default Map;
+export {Map};
+
+export default connect(mapStateToProps, null)(Map);

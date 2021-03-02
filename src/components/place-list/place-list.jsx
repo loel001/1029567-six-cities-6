@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
+import {connect} from 'react-redux';
 import Place from '../place/place';
-import placesPropTypes from '../../common/prop-types';
+import {placesPropTypes} from '../../common/prop-types';
 import PropTypes from "prop-types";
 
 const PlaceList = (props) => {
@@ -28,9 +29,16 @@ const PlaceList = (props) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  places: state.places,
+  activeCity: state.activeCity
+});
+
 PlaceList.propTypes = {
   places: placesPropTypes,
   placeName: PropTypes.string.isRequired
 };
 
-export default PlaceList;
+export {PlaceList};
+
+export default connect(mapStateToProps, null)(PlaceList);

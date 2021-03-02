@@ -14,9 +14,7 @@ const App = (props) => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <MainPage
-            places={places}
-          />
+          <MainPage />
         </Route>
         <Route exact path="/login">
           <Login />
