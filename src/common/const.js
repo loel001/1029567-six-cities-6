@@ -35,3 +35,5 @@ export const PlaceSettings = {
 };
 
 export const CIIES = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`];
+
+export const SORTING_TYPES = [`Popular`, `Price: low to high`, `Price: high to low`, `Top rated first`];

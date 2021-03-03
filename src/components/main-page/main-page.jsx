@@ -8,7 +8,7 @@ import CitiesList from "../cities-list/cities-list";
 import PropTypes from "prop-types";
 import MainEmptyPage from '../main-empty-page/main-empty-page';
 import Header from "../header/header";
-import Sorting from "../sorting/sorting";
+import SortingList from "../sorting-list/sorting-list";
 
 const MainPage = (props) => {
 
@@ -35,7 +35,7 @@ const MainPage = (props) => {
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{places.length} places to stay in {activeCity}</b>
-                <Sorting />
+                <SortingList />
                 <div className="cities__places-list places__list tabs__content">
                   <PlaceList placeName="MAIN"/>
                 </div>
