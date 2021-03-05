@@ -1,35 +1,46 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {ActionCreator} from '../../store/action';
-import {SORTING_TYPES} from '../../common/const';
+import {SortingTypes} from '../../common/const';
 
 const SortingList = (props) => {
 
-  const {activeSorting, onSortingClick} = props;
+  const {activeSorting, onSortingChange, onMainPageRender} = props;
+
+  const [openedSorting, setOpenedSorting] = useState(false);
+
+  const handleSortingClick = () => {
+    setOpenedSorting((prevState) => !prevState);
+  };
 
   const handleSortingChange = (evt) => {
-    evt.preventDefault();
-    onSortingClick(evt.target.textContent);
+    onSortingChange(evt.target.innerText);
+    setOpenedSorting(false);
   };
+
+  useEffect(() => {
+    onMainPageRender();
+  }, [activeSorting]);
 
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex="0">
+      <span className="places__sorting-type" tabIndex="0" onClick={handleSortingClick}>
         {activeSorting}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
+      {openedSorting &&
       <ul className="places__options places__options--custom places__options--opened">
-        {SORTING_TYPES.map((sortingType, id) => (
+        {Object.values(SortingTypes).map((sortingType, id) => (
           <li className={`places__option ${sortingType === activeSorting ? `places__option--active` : ``}`}
             key={sortingType + id}
             tabIndex={0}
             onClick={handleSortingChange}>{sortingType}</li>
         ))}
-      </ul>
+      </ul>}
     </form>
   );
 };
@@ -39,14 +50,18 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onSortingClick(selectedSorting) {
+  onSortingChange(selectedSorting) {
     dispatch(ActionCreator.changeSorting(selectedSorting));
+  },
+  onMainPageRender() {
+    dispatch(ActionCreator.getPlaces());
   }
 });
 
 SortingList.propTypes = {
   activeSorting: PropTypes.string.isRequired,
-  onSortingClick: PropTypes.func.isRequired
+  onSortingChange: PropTypes.func.isRequired,
+  onMainPageRender: PropTypes.func.isRequired
 };
 
 export {SortingList};

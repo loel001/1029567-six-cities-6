@@ -1,11 +1,12 @@
 import places from '../mocks/places';
 import {ActionType} from './action';
-import {getPlacesCity} from '../common/utils';
+import {getPlacesCity, sortPlaces} from '../common/utils';
+import {CIIES, SortingTypes} from "../common/const";
 
 const initialState = {
   places,
-  activeCity: `Paris`,
-  activeSorting: `Popular`
+  activeCity: CIIES[0],
+  activeSorting: SortingTypes.POPULAR
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,22 +17,16 @@ const reducer = (state = initialState, action) => {
         activeCity: action.payload
       };
 
-    case ActionType.GET_PLACES:
-      return {
-        ...state,
-        places: getPlacesCity(initialState.places, state.activeCity)
-      };
-
     case ActionType.CHANGE_SORTING:
       return {
         ...state,
         activeSorting: action.payload
       };
 
-    case ActionType.GET_SORTING_PLACES:
+    case ActionType.GET_PLACES:
       return {
         ...state,
-        places: getSortingPlaces(initialState.places, state.activeSorting)
+        places: sortPlaces(getPlacesCity(initialState.places, state.activeCity), state.activeSorting)
       };
   }
 
