@@ -6,7 +6,8 @@ import {CIIES, SortingTypes} from "../common/const";
 const initialState = {
   places,
   activeCity: CIIES[0],
-  activeSorting: SortingTypes.POPULAR
+  activeSorting: SortingTypes.POPULAR,
+  activePlace: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -27,6 +28,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         places: sortPlaces(getPlacesCity(initialState.places, state.activeCity), state.activeSorting)
+      };
+
+    case ActionType.GET_ACTIVE_PLACE:
+      return {
+        ...state,
+        activePlaceId: action.payload
       };
   }
 

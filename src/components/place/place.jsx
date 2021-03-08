@@ -8,7 +8,7 @@ import {PlaceSettings} from '../../common/const';
 
 const Place = (props) => {
 
-  const {handleMouseEnter, handleMouseLeave, isActivePlace, place, placeName} = props;
+  const {setActivePlace, unsetActivePlace, place, placeName} = props;
 
   const {
     id,
@@ -29,8 +29,11 @@ const Place = (props) => {
     );
   };
 
+  const handleMouseEnter = () => setActivePlace(place.id);
+  const handleMouseLeave = () => unsetActivePlace();
+
   return (
-    <article className={`${PlaceSettings[placeName].article} place-card ${isActivePlace ? `place-card--active` : ``}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <article className={`${PlaceSettings[placeName].article} place-card`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       {isPremium ? renderIsPremium() : null}
       <div className={`${PlaceSettings[placeName].image.imageClass} place-card__image-wrapper`}>
         <Link to={`/offer/` + id}>
@@ -74,9 +77,8 @@ const Place = (props) => {
 
 Place.propTypes = {
   place: placePropTypes,
-  handleMouseEnter: PropTypes.func.isRequired,
-  handleMouseLeave: PropTypes.func.isRequired,
-  isActivePlace: PropTypes.bool.isRequired,
+  setActivePlace: PropTypes.func.isRequired,
+  unsetActivePlace: PropTypes.func.isRequired,
   placeName: PropTypes.string.isRequired
 };
 

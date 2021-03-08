@@ -1,7 +1,8 @@
 export const ActionType = {
   CHANGE_CITY: `changeCity`,
   GET_PLACES: `getPlaces`,
-  CHANGE_SORTING: `changeSorting`
+  CHANGE_SORTING: `changeSorting`,
+  GET_ACTIVE_PLACE: `getActivePlace`
 };
 
 export const ActionCreator = {
@@ -15,5 +16,9 @@ export const ActionCreator = {
   changeSorting: (selectedSorting) => ({
     type: ActionType.CHANGE_SORTING,
     payload: selectedSorting,
+  }),
+  getActivePlace: (activePlaceId) => ({
+    type: ActionType.GET_ACTIVE_PLACE,
+    payload: activePlaceId,
   })
 };

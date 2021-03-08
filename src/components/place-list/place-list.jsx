@@ -1,26 +1,19 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import Place from '../place/place';
 import {placesPropTypes} from '../../common/prop-types';
 import PropTypes from "prop-types";
+import {ActionCreator} from "../../store/action";
 
 const PlaceList = (props) => {
 
-  const {places, placeName} = props;
-  const [activePlaceId, setActivePlace] = useState(false);
-
-  const isActivePlace = (place) => place.id === activePlaceId;
+  const {places, placeName, setActivePlace, unsetActivePlace} = props;
 
   return (
     places.map((place) => (
       <Place
-        handleMouseEnter={() => {
-          setActivePlace(place.id);
-        }}
-        handleMouseLeave={() => {
-          setActivePlace(null);
-        }}
-        isActivePlace={isActivePlace(place)}
+        setActivePlace={setActivePlace}
+        unsetActivePlace={unsetActivePlace}
         key={place.id}
         place={place}
         placeName={placeName}
@@ -34,11 +27,22 @@ const mapStateToProps = (state) => ({
   activeCity: state.activeCity
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  setActivePlace(id) {
+    dispatch(ActionCreator.getActivePlace(id));
+  },
+  unsetActivePlace() {
+    dispatch(ActionCreator.getActivePlace(null));
+  }
+});
+
 PlaceList.propTypes = {
   places: placesPropTypes,
-  placeName: PropTypes.string.isRequired
+  placeName: PropTypes.string.isRequired,
+  setActivePlace: PropTypes.func.isRequired,
+  unsetActivePlace: PropTypes.func.isRequired
 };
 
 export {PlaceList};
 
-export default connect(mapStateToProps, null)(PlaceList);
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceList);

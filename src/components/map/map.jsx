@@ -1,12 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {connect} from 'react-redux';
 import leaflet from 'leaflet';
+import PropTypes from 'prop-types';
 import "leaflet/dist/leaflet.css";
 import {placesPropTypes} from "../../common/prop-types";
 
 const Map = (props) => {
 
-  const {places} = props;
+  const {places, activePlaceId} = props;
 
   const mapRef = useRef();
   const [mapLeaflet, setMapLeaflet] = useState(null);
@@ -14,8 +15,12 @@ const Map = (props) => {
   useEffect(() => {
     const CITY = [52.38333, 4.9];
     const ZOOM = 12;
-    const icon = leaflet.icon({
+    const iconStandard = leaflet.icon({
       iconUrl: `img/pin.svg`,
+      iconSize: [30, 30]
+    });
+    const iconActive = leaflet.icon({
+      iconUrl: `img/pin-active.svg`,
       iconSize: [30, 30]
     });
     let map;
@@ -40,6 +45,7 @@ const Map = (props) => {
     }
 
     places.map((place) => {
+      const icon = place.id === activePlaceId ? iconActive : iconStandard;
       leaflet
         .marker({
           lat: place.location.latitude,
@@ -55,7 +61,7 @@ const Map = (props) => {
         }
       });
     };
-  }, [places]);
+  }, [places, activePlaceId]);
 
 
   return (
@@ -65,11 +71,13 @@ const Map = (props) => {
 
 const mapStateToProps = (state) => ({
   activeCity: state.activeCity,
-  places: state.places
+  places: state.places,
+  activePlaceId: state.activePlaceId
 });
 
 Map.propTypes = {
-  places: placesPropTypes
+  places: placesPropTypes,
+  activePlaceId: PropTypes.number
 };
 
 
