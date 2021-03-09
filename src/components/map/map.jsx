@@ -44,9 +44,9 @@ const Map = (props) => {
       map = mapLeaflet;
     }
 
-    places.map((place) => {
+    const markers = places.map((place) => {
       const icon = place.id === activePlaceId ? iconActive : iconStandard;
-      leaflet
+      return leaflet
         .marker({
           lat: place.location.latitude,
           lng: place.location.longitude
@@ -55,11 +55,9 @@ const Map = (props) => {
     });
 
     return () => {
-      map.eachLayer((layer) => {
-        if (layer instanceof leaflet.Marker) {
-          map.removeLayer(layer);
-        }
-      });
+      for (const marker of markers) {
+        marker.remove();
+      }
     };
   }, [places, activePlaceId]);
 
