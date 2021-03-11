@@ -9,14 +9,29 @@ import PropTypes from "prop-types";
 import MainEmptyPage from '../main-empty-page/main-empty-page';
 import Header from "../header/header";
 import SortingList from "../sorting-list/sorting-list";
+import LoadingScreen from '../loading-screen/loading-screen';
+import {fetchPlaceList} from "../../store/api-actions";
+import {getPlacesCity, sortPlaces} from "../../common/utils";
 
 const MainPage = (props) => {
 
-  const {places, activeCity, onMainPageRender} = props;
+  const {places, activeCity, onMainPageRender, isDataLoaded, onLoadData} = props;
 
   useEffect(() => {
     onMainPageRender();
   }, [activeCity]);
+
+  useEffect(() => {
+    if (!isDataLoaded) {
+      onLoadData();
+    }
+  }, [isDataLoaded]);
+
+  if (!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <div className="page page--gray page--main">
@@ -42,7 +57,7 @@ const MainPage = (props) => {
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map />
+                  <Map activeCity={activeCity}/>
                 </section>
               </div>
             </div>
@@ -55,20 +70,26 @@ const MainPage = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  places: state.places,
+  places: sortPlaces(getPlacesCity(state.places, state.activeCity), state.activeSorting),
   activeCity: state.activeCity,
+  isDataLoaded: state.isDataLoaded,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onMainPageRender() {
     dispatch(ActionCreator.getPlaces());
   },
+  onLoadData() {
+    dispatch(fetchPlaceList());
+  },
 });
 
 MainPage.propTypes = {
   places: placesPropTypes,
   activeCity: PropTypes.string.isRequired,
-  onMainPageRender: PropTypes.func.isRequired
+  onMainPageRender: PropTypes.func.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
 };
 
 export {MainPage};

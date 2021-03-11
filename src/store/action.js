@@ -2,7 +2,9 @@ export const ActionType = {
   CHANGE_CITY: `changeCity`,
   GET_PLACES: `getPlaces`,
   CHANGE_SORTING: `changeSorting`,
-  GET_ACTIVE_PLACE: `getActivePlace`
+  GET_ACTIVE_PLACE: `getActivePlace`,
+  LOAD_PLACES: `loadPlaces`,
+  REQUIRED_AUTHORIZATION: `requiredAuthorization`,
 };
 
 export const ActionCreator = {
@@ -20,5 +22,13 @@ export const ActionCreator = {
   getActivePlace: (activePlaceId) => ({
     type: ActionType.GET_ACTIVE_PLACE,
     payload: activePlaceId,
+  }),
+  loadPlaces: (places) => ({
+    type: ActionType.LOAD_PLACES,
+    payload: places
+  }),
+  requireAuthorization: (status) => ({
+    type: ActionType.REQUIRED_AUTHORIZATION,
+    payload: status,
   })
 };

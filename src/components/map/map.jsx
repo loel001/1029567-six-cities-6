@@ -4,17 +4,18 @@ import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
 import "leaflet/dist/leaflet.css";
 import {placesPropTypes} from "../../common/prop-types";
+import {getPlacesCity, sortPlaces} from "../../common/utils";
 
 const Map = (props) => {
 
-  const {places, activePlaceId} = props;
+  const {places, activePlaceId, activeCity} = props;
 
   const mapRef = useRef();
   const [mapLeaflet, setMapLeaflet] = useState(null);
 
   useEffect(() => {
-    const CITY = [52.38333, 4.9];
-    const ZOOM = 12;
+    const {latitude, longitude, zoom} = places[0].city.location;
+
     const iconStandard = leaflet.icon({
       iconUrl: `img/pin.svg`,
       iconSize: [30, 30]
@@ -27,13 +28,16 @@ const Map = (props) => {
 
     if (!mapLeaflet) {
       map = leaflet.map(mapRef.current, {
-        center: CITY,
-        zoom: ZOOM,
+        center: {
+          lat: latitude,
+          lng: longitude
+        },
+        zoom,
         zoomControl: false,
         marker: true
       });
 
-      map.setView(CITY, ZOOM);
+      map.setView({lat: latitude, lng: longitude}, zoom);
 
       leaflet
         .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
@@ -59,7 +63,7 @@ const Map = (props) => {
         marker.remove();
       }
     };
-  }, [places, activePlaceId]);
+  }, [places, activePlaceId, activeCity]);
 
 
   return (
@@ -69,13 +73,14 @@ const Map = (props) => {
 
 const mapStateToProps = (state) => ({
   activeCity: state.activeCity,
-  places: state.places,
+  places: sortPlaces(getPlacesCity(state.places, state.activeCity), state.activeSorting),
   activePlaceId: state.activePlaceId
 });
 
 Map.propTypes = {
   places: placesPropTypes,
-  activePlaceId: PropTypes.number
+  activePlaceId: PropTypes.number,
+  activeCity: PropTypes.string.isRequired
 };
 
 

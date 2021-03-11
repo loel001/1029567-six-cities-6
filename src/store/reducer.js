@@ -1,17 +1,24 @@
-import places from '../mocks/places';
 import {ActionType} from './action';
-import {getPlacesCity, sortPlaces} from '../common/utils';
-import {CIIES, SortingTypes} from "../common/const";
+import {CIIES, SortingTypes, AuthorizationStatus} from "../common/const";
 
 const initialState = {
-  places,
+  places: [],
   activeCity: CIIES[0],
   activeSorting: SortingTypes.POPULAR,
-  activePlace: null
+  activePlace: null,
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  isDataLoaded: false
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.LOAD_PLACES:
+      return {
+        ...state,
+        places: action.payload,
+        isDataLoaded: true
+      };
+
     case ActionType.CHANGE_CITY:
       return {
         ...state,
@@ -27,13 +34,19 @@ const reducer = (state = initialState, action) => {
     case ActionType.GET_PLACES:
       return {
         ...state,
-        places: sortPlaces(getPlacesCity(initialState.places, state.activeCity), state.activeSorting)
+        places: state.places
       };
 
     case ActionType.GET_ACTIVE_PLACE:
       return {
         ...state,
         activePlaceId: action.payload
+      };
+
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
       };
   }
 
