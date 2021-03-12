@@ -37,8 +37,6 @@ const Map = (props) => {
         marker: true
       });
 
-      map.setView({lat: latitude, lng: longitude}, zoom);
-
       leaflet
         .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
           attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
@@ -47,6 +45,8 @@ const Map = (props) => {
     } else {
       map = mapLeaflet;
     }
+
+    map.setView({lat: latitude, lng: longitude}, zoom);
 
     const markers = places.map((place) => {
       const icon = place.id === activePlaceId ? iconActive : iconStandard;
@@ -67,7 +67,7 @@ const Map = (props) => {
 
 
   return (
-    <div id="map" style={{height: `100%`}} ref={mapRef}></div>
+    <div style={{height: `100%`}} ref={mapRef}></div>
   );
 };
 

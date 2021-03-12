@@ -5,6 +5,7 @@ export const ActionType = {
   GET_ACTIVE_PLACE: `getActivePlace`,
   LOAD_PLACES: `loadPlaces`,
   REQUIRED_AUTHORIZATION: `requiredAuthorization`,
+  REDIRECT_TO_ROUTE: `redirectToRoute`,
 };
 
 export const ActionCreator = {
@@ -30,5 +31,9 @@ export const ActionCreator = {
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status,
+  }),
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url,
   })
 };
