@@ -13,7 +13,14 @@ export const checkAuth = () => (dispatch, _getState, api) => (
     .catch(() => {})
 );
 
-export const login = ({login: email, password}) => (dispatch, _getState, api) => (
+export const logIn = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(AppRoute.LOGIN, {email, password})
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+    .catch(() => {})
+);
+
+export const logout = () => (dispatch, _getState, api) => (
+  api.get(AppRoute.LOGIN)
+    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
+    .catch(() => {})
 );
