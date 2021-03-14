@@ -2,11 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../common/const';
-import {logOut} from '../../store/api-actions';
+import {AppRoute, AuthorizationStatus} from '../../common/const';
+import {useHistory} from 'react-router-dom';
 
 const Header = (props) => {
-  const {isLoggedIn, userLogout, usersEmail} = props;
+  const {authorizationStatus, authorizationInfo} = props;
+  const history = useHistory();
+
+  const handelPushLoginScreen = (evt) => {
+    evt.preventDefault();
+    history.push(AppRoute.LOGIN);
+  };
 
   return (
     <header className="header">
@@ -20,24 +26,11 @@ const Header = (props) => {
           <nav className="header__nav">
             <ul className="header__nav-list">
               <li className="header__nav-item user">
-                {
-                  isLoggedIn
-                    ? (
-                      <>
-                        <Link to={AppRoute.FAVORITES} className="header__nav-link header__nav-link--profile">
-                          <div className="header__avatar-wrapper user__avatar-wrapper" />
-                          <span className="header__user-name user__name">{usersEmail}</span>
-                        </Link>
-                        <button onClick={userLogout}>
-                          Log Out
-                        </button>
-                      </>
-                    ) : (
-                      <Link to={AppRoute.LOGIN} className="header__nav-link header__nav-link--profile">
-                        <div className="header__avatar-wrapper user__avatar-wrapper" />
-                        <span className="header__login">Sign in</span>
-                      </Link>
-                    )
+                {authorizationStatus === AuthorizationStatus.AUTH ?
+                  <Link className="header__logo-link header__logo-link--active" to={AppRoute.FAVORITES}>
+                    <span className="header__user-name user__name">{authorizationInfo.email}</span>
+                  </Link>
+                  : <span onClick={handelPushLoginScreen} className="header__login">Sign in</span>
                 }
               </li>
             </ul>
@@ -49,23 +42,16 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
-  userLogout: PropTypes.func.isRequired,
-  usersEmail: PropTypes.string,
+  authorizationStatus: PropTypes.string.isRequired,
+  authorizationInfo: PropTypes.shape({
+    email: PropTypes.string,
+    password: PropTypes.string,
+  })
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isLoggedIn: state.isLoggedIn,
-    usersEmail: state.usersEmail
-  };
-};
+const mapStateToProps = (state) => ({
+  authorizationStatus: state.authorizationStatus,
+  authorizationInfo: state.authorizationInfo,
+});
 
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    userLogout: () => dispatch(logOut())
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, null)(Header);

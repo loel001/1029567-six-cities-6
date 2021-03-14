@@ -7,7 +7,8 @@ const initialState = {
   activeSorting: SortingTypes.POPULAR,
   activePlace: null,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
-  isDataLoaded: false
+  isDataLoaded: false,
+  authorizationInfo: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -31,12 +32,6 @@ const reducer = (state = initialState, action) => {
         activeSorting: action.payload
       };
 
-    case ActionType.GET_PLACES:
-      return {
-        ...state,
-        places: state.places
-      };
-
     case ActionType.GET_ACTIVE_PLACE:
       return {
         ...state,
@@ -47,6 +42,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         authorizationStatus: action.payload,
+      };
+
+    case ActionType.AUTHORIZATION_INFO:
+      return {
+        ...state,
+        authorizationInfo: action.payload
       };
   }
 

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {ActionCreator} from '../../store/action';
@@ -6,7 +6,7 @@ import {SortingTypes} from '../../common/const';
 
 const SortingList = (props) => {
 
-  const {activeSorting, onSortingChange, onMainPageRender} = props;
+  const {activeSorting, onSortingChange} = props;
 
   const [openedSorting, setOpenedSorting] = useState(false);
 
@@ -18,10 +18,6 @@ const SortingList = (props) => {
     onSortingChange(evt.target.innerText);
     setOpenedSorting(false);
   };
-
-  useEffect(() => {
-    onMainPageRender();
-  }, [activeSorting]);
 
   return (
     <form className="places__sorting" action="#" method="get">
@@ -53,15 +49,11 @@ const mapDispatchToProps = (dispatch) => ({
   onSortingChange(selectedSorting) {
     dispatch(ActionCreator.changeSorting(selectedSorting));
   },
-  onMainPageRender() {
-    dispatch(ActionCreator.getPlaces());
-  }
 });
 
 SortingList.propTypes = {
   activeSorting: PropTypes.string.isRequired,
   onSortingChange: PropTypes.func.isRequired,
-  onMainPageRender: PropTypes.func.isRequired
 };
 
 export {SortingList};

@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {ActionCreator} from '../../store/action';
 import {connect} from 'react-redux';
 import {placesPropTypes} from '../../common/prop-types';
 import PlaceList from '../place-list/place-list';
@@ -15,11 +14,7 @@ import {getPlacesCity, sortPlaces} from "../../common/utils";
 
 const MainPage = (props) => {
 
-  const {places, activeCity, onMainPageRender, isDataLoaded, onLoadData} = props;
-
-  useEffect(() => {
-    onMainPageRender();
-  }, [activeCity]);
+  const {places, activeCity, isDataLoaded, onLoadData} = props;
 
   useEffect(() => {
     if (!isDataLoaded) {
@@ -76,9 +71,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onMainPageRender() {
-    dispatch(ActionCreator.getPlaces());
-  },
   onLoadData() {
     dispatch(fetchPlaceList());
   },
@@ -87,7 +79,6 @@ const mapDispatchToProps = (dispatch) => ({
 MainPage.propTypes = {
   places: placesPropTypes,
   activeCity: PropTypes.string.isRequired,
-  onMainPageRender: PropTypes.func.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
 };

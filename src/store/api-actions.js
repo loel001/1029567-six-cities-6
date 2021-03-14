@@ -9,18 +9,15 @@ export const fetchPlaceList = () => (dispatch, _getState, api) => (
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(AppRoute.LOGIN)
+    .then(({data}) => dispatch(ActionCreator.authorizationInfo(data)))
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {})
 );
 
 export const logIn = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(AppRoute.LOGIN, {email, password})
+    .then(({data}) => dispatch(ActionCreator.authorizationInfo(data)))
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    .catch(() => {})
-);
-
-export const logout = () => (dispatch, _getState, api) => (
-  api.get(AppRoute.LOGIN)
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
+    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.MAIN)))
     .catch(() => {})
 );

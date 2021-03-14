@@ -1,20 +1,17 @@
 export const ActionType = {
   CHANGE_CITY: `changeCity`,
-  GET_PLACES: `getPlaces`,
   CHANGE_SORTING: `changeSorting`,
   GET_ACTIVE_PLACE: `getActivePlace`,
   LOAD_PLACES: `loadPlaces`,
   REQUIRED_AUTHORIZATION: `requiredAuthorization`,
   REDIRECT_TO_ROUTE: `redirectToRoute`,
+  AUTHORIZATION_INFO: `authorizationInfo`,
 };
 
 export const ActionCreator = {
   changeCity: (selectedCity) => ({
     type: ActionType.CHANGE_CITY,
     payload: selectedCity,
-  }),
-  getPlaces: () => ({
-    type: ActionType.GET_PLACES,
   }),
   changeSorting: (selectedSorting) => ({
     type: ActionType.CHANGE_SORTING,
@@ -35,5 +32,9 @@ export const ActionCreator = {
   redirectToRoute: (url) => ({
     type: ActionType.REDIRECT_TO_ROUTE,
     payload: url,
+  }),
+  authorizationInfo: (info) => ({
+    type: ActionType.AUTHORIZATION_INFO,
+    payload: info
   })
 };

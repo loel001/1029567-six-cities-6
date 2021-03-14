@@ -10,6 +10,7 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import {ActionCreator} from './store/action';
 import {AuthorizationStatus} from "./common/const";
 import {checkAuth} from './store/api-actions';
+import {redirect} from "./store/middlewares/redirect";
 
 const api = createAPI(
     () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH))
@@ -18,15 +19,17 @@ const api = createAPI(
 const store = createStore(
     reducer,
     composeWithDevTools(
-        applyMiddleware(thunk.withExtraArgument(api))
+        applyMiddleware(thunk.withExtraArgument(api)),
+        applyMiddleware(redirect)
     )
 );
 
-store.dispatch(checkAuth());
 
-ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.querySelector(`#root`)
-);
+store.dispatch(checkAuth()).then(() => {
+  ReactDOM.render(
+      <Provider store={store}>
+        <App />
+      </Provider>,
+      document.querySelector(`#root`)
+  );
+});
