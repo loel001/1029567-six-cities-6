@@ -26,3 +26,10 @@ export const logIn = ({login: email, password}) => (dispatch, _getState, api) =>
     .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.MAIN)))
     .catch(() => {})
 );
+
+export const logOut = () => (dispatch, _getState, api) => (
+  api.get(AppRoute.LOGOUT)
+    .then(() => dispatch(ActionCreator.authorizationInfo({})))
+    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
+    .catch(() => {})
+);

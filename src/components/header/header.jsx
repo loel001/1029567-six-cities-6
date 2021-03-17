@@ -4,9 +4,10 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../common/const';
 import {useHistory} from 'react-router-dom';
+import {logOut} from '../../store/api-actions';
 
 const Header = (props) => {
-  const {authorizationStatus, authorizationInfo} = props;
+  const {authorizationStatus, authorizationInfo, handelUserLogout} = props;
   const history = useHistory();
 
   const handelPushLoginScreen = (evt) => {
@@ -27,9 +28,12 @@ const Header = (props) => {
             <ul className="header__nav-list">
               <li className="header__nav-item user">
                 {authorizationStatus === AuthorizationStatus.AUTH ?
-                  <Link className="header__logo-link header__logo-link--active" to={AppRoute.FAVORITES}>
-                    <span className="header__user-name user__name">{authorizationInfo.email}</span>
-                  </Link>
+                  <>
+                    <Link className="header__logo-link header__logo-link--active" to={AppRoute.FAVORITES}>
+                      <span className="header__user-name user__name">{authorizationInfo.email}</span>
+                    </Link>
+                    <button onClick={handelUserLogout}>Log Out</button>
+                  </>
                   : <span onClick={handelPushLoginScreen} className="header__login">Sign in</span>
                 }
               </li>
@@ -46,7 +50,8 @@ Header.propTypes = {
   authorizationInfo: PropTypes.shape({
     email: PropTypes.string,
     password: PropTypes.string,
-  })
+  }),
+  handelUserLogout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -54,4 +59,10 @@ const mapStateToProps = (state) => ({
   authorizationInfo: state.authorizationInfo,
 });
 
-export default connect(mapStateToProps, null)(Header);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handelUserLogout: () => dispatch(logOut())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

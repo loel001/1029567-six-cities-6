@@ -53,5 +53,6 @@ export const AppRoute = {
   FAVORITES: `/favorites`,
   MAIN: `/`,
   HOTELS: `/hotels`,
-  FAVORITE: `/favorite`
+  FAVORITE: `/favorite`,
+  LOGOUT: `/logout`
 };
