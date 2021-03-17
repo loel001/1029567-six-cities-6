@@ -12,7 +12,7 @@ import {AuthorizationStatus} from "./common/const";
 import {checkAuth} from './store/api-actions';
 import {redirect} from "./store/middlewares/redirect";
 
-const api = createAPI(
+export const api = createAPI(
     () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH))
 );
 

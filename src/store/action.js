@@ -6,7 +6,8 @@ export const ActionType = {
   REQUIRED_AUTHORIZATION: `requiredAuthorization`,
   REDIRECT_TO_ROUTE: `redirectToRoute`,
   AUTHORIZATION_INFO: `authorizationInfo`,
-  LOAD_FAVORITES_PLACES: `loadFavoritesPlaces`
+  LOAD_FAVORITES_PLACES: `loadFavoritesPlaces`,
+  LOAD_REVIEWS: `loadReviews`
 };
 
 export const ActionCreator = {
@@ -43,5 +44,11 @@ export const ActionCreator = {
   authorizationInfo: (info) => ({
     type: ActionType.AUTHORIZATION_INFO,
     payload: info
-  })
+  }),
+  loadReviews: (reviews) => {
+    return {
+      type: ActionType.LOAD_REVIEWS,
+      payload: reviews
+    };
+  },
 };

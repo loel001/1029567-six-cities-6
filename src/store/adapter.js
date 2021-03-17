@@ -25,3 +25,19 @@ export const adaptPlaceToClient = (place) => {
 
   return adaptedPlace;
 };
+
+export const adaptReviewToClient = (data) => {
+  const adaptedReview = {
+    ...data,
+    user: {
+      ...data.user,
+      avatarUrl: data.user.avatar_url,
+      isPro: data.user.is_pro
+    }
+  };
+
+  delete adaptedReview.user.avatar_url;
+  delete adaptedReview.user.is_pro;
+
+  return adaptedReview;
+};

@@ -36,7 +36,7 @@ const Place = (props) => {
     <article className={`${PlaceSettings[placeName].article} place-card`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       {isPremium ? renderIsPremium() : null}
       <div className={`${PlaceSettings[placeName].image.imageClass} place-card__image-wrapper`}>
-        <Link to={`/offer/` + id}>
+        <Link to={`/offer/${id}`}>
           <img className="place-card__image" src={previewImage} width={PlaceSettings[placeName].image.width} height={PlaceSettings[placeName].image.height} alt="Place image"/>
         </Link>
       </div>

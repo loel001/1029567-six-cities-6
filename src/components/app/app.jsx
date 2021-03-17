@@ -1,5 +1,4 @@
 import React from 'react';
-import {placesPropTypes, reviewsPropTypes} from '../../common/prop-types';
 import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import MainPage from '../main-page/main-page';
 import NotFoundPage from '../not-found-page/not-found-page';
@@ -10,9 +9,7 @@ import PrivateRoute from '../private-route/private-route';
 import browserHistory from "../../browser-history";
 import {AppRoute} from "../../common/const";
 
-const App = (props) => {
-  const {places, reviews} = props;
-
+const App = () => {
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
@@ -27,11 +24,11 @@ const App = (props) => {
           render={() => <Favorites />}
         >
         </PrivateRoute>
-        <Route exact path="/offer/:id">
-          <Property
-            places={places}
-            reviews={reviews}
-          />
+        <Route exact path={AppRoute.OFFER}>
+          <Property />
+        </Route>
+        <Route exact path={AppRoute.ERROR}>
+          <NotFoundPage />
         </Route>
         <Route>
           <NotFoundPage />
@@ -39,11 +36,6 @@ const App = (props) => {
       </Switch>
     </BrowserRouter>
   );
-};
-
-App.propTypes = {
-  reviews: reviewsPropTypes,
-  places: placesPropTypes
 };
 
 export default App;

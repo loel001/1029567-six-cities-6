@@ -4,7 +4,6 @@ import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
 import "leaflet/dist/leaflet.css";
 import {placesPropTypes} from "../../common/prop-types";
-import {getPlacesCity, sortPlaces} from "../../common/utils";
 
 const Map = (props) => {
 
@@ -73,7 +72,6 @@ const Map = (props) => {
 
 const mapStateToProps = (state) => ({
   activeCity: state.activeCity,
-  places: sortPlaces(getPlacesCity(state.places, state.activeCity), state.activeSorting),
   activePlaceId: state.activePlaceId
 });
 

@@ -1,13 +1,26 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {sendPropertyReview} from "../../store/api-actions";
+import {MIN_SIMBOL_REVIEW} from '../../common/const';
 
-const ReviewForm = () => {
+const ReviewForm = (props) => {
+  const {sendReview, placeId} = props;
   const [commentForm, setCommentForm] = React.useState({
-    rating: 0,
+    rating: null,
     comment: ``
   });
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+
+    sendReview(placeId, commentForm);
+
+    setCommentForm({
+      ...commentForm,
+      rating: null,
+      comment: ``
+    });
   };
 
   const handleFieldChange = (evt) => {
@@ -59,17 +72,43 @@ const ReviewForm = () => {
           </svg>
         </label>
       </div>
-      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" onChange={handleFieldChange}>
+      <textarea
+        className="reviews__textarea form__textarea"
+        id="comment"
+        name="comment"
+        placeholder="Tell how was your stay, what you like and what can be improved"
+        value={commentForm.comment}
+        onChange={handleFieldChange}
+      >
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and
           describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={
+          !((commentForm.comment.length > MIN_SIMBOL_REVIEW) && commentForm.rating)
+        }>Submit</button>
       </div>
     </form>
   );
 };
 
-export default ReviewForm;
+ReviewForm.propTypes = {
+  sendReview: PropTypes.func.isRequired,
+  placeId: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  propertyReviews: state.propertyReviews
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  sendReview(id, formData) {
+    dispatch(sendPropertyReview(id, formData));
+  },
+});
+
+export {ReviewForm};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewForm);

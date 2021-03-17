@@ -4,7 +4,6 @@ import Place from '../place/place';
 import {placesPropTypes} from '../../common/prop-types';
 import PropTypes from "prop-types";
 import {ActionCreator} from "../../store/action";
-import {getPlacesCity, sortPlaces} from "../../common/utils";
 
 const PlaceList = (props) => {
 
@@ -24,7 +23,6 @@ const PlaceList = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  places: sortPlaces(getPlacesCity(state.places, state.activeCity), state.activeSorting),
   activeCity: state.activeCity
 });
 

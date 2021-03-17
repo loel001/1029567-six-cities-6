@@ -11,6 +11,8 @@ const initialState = {
   authorizationInfo: {},
   favoritesPlaces: [],
   isDataFavoriteLoaded: false,
+  isReviewsLoaded: false,
+  propertyReviews: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -58,6 +60,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         authorizationInfo: action.payload
       };
+
+    case ActionType.LOAD_REVIEWS:
+      return ({
+        ...state,
+        propertyReviews: action.payload,
+        isReviewsLoaded: true
+      });
   }
 
   return state;

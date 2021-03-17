@@ -1,18 +1,45 @@
-import React from 'react';
-import {placesPropTypes, reviewsPropTypes} from '../../common/prop-types';
+import React, {useEffect, useState} from 'react';
+import {useHistory, useParams} from 'react-router-dom';
 import {MAX_PROPERTY_IMAGES, MAX_NUMBER_PIN} from '../../common/const';
 import {getNumberStarts} from '../../common/utils';
-import ReviewForm from '../review-form/review-form';
-import ReviewList from "../review-list/review-list";
+import ReviewWrapper from '../review-wrapper/review-wrapper';
 import Map from "../map/map";
 import PlaceList from "../place-list/place-list";
 import Header from "../header/header";
+import {fetchNearPlaces, fetchProperty} from '../../store/api-actions';
+import {AppRoute} from '../../common/const';
+import LoadingScreen from "../loading-screen/loading-screen";
 
-const Property = (props) => {
+const Property = () => {
+  const [isPropertyLoaded, setPropertyLoaded] = useState(false);
+  const [currentProperty, setCurrentProperty] = useState([]);
+  const [nearPlaces, setNearPlaces] = useState([]);
+  const [isNearPlacesLoaded, setNearPlacesLoaded] = useState(false);
+  const history = useHistory();
+  let {id} = useParams();
 
-  const {places, reviews} = props;
+  useEffect(() => {
+    if (!isPropertyLoaded) {
+      fetchProperty(id)
+        .then((data) => setCurrentProperty(data))
+        .then(() => setPropertyLoaded(true))
+        .catch(() => history.push(AppRoute.ERROR));
+    }
+  }, [isPropertyLoaded, id]);
 
-  const property = places[0];
+  useEffect(() => {
+    if (!isNearPlacesLoaded) {
+      fetchNearPlaces(id)
+        .then((data) => setNearPlaces(data))
+        .then(() => setNearPlacesLoaded(true));
+    }
+  }, [isNearPlacesLoaded, id]);
+
+  if (!(isPropertyLoaded && isNearPlacesLoaded)) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   const {
     bedrooms,
@@ -26,7 +53,9 @@ const Property = (props) => {
     rating,
     title,
     type
-  } = property;
+  } = currentProperty;
+
+  const city = currentProperty.city.name;
 
   const renderIsPremium = () => {
     return (
@@ -120,36 +149,24 @@ const Property = (props) => {
                   </p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                {
-                  (reviews.length > 0) &&
-                  <ReviewList reviews={reviews} />
-                }
-                <ReviewForm />
-              </section>
+              <ReviewWrapper placeId={id}/>
             </div>
           </div>
           <section className="property__map map">
-            <Map places={places.slice(0, MAX_NUMBER_PIN)} />
+            <Map activeCity={city} places={nearPlaces.slice(0, MAX_NUMBER_PIN)} />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <PlaceList places={places.slice(0, MAX_NUMBER_PIN)} placeName="NEAR" />
+              <PlaceList places={nearPlaces.slice(0, MAX_NUMBER_PIN)} placeName="NEAR" />
             </div>
           </section>
         </div>
       </main>
     </div>
   );
-};
-
-Property.propTypes = {
-  reviews: reviewsPropTypes,
-  places: placesPropTypes
 };
 
 

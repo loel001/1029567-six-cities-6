@@ -47,12 +47,12 @@ const MainPage = (props) => {
                 <b className="places__found">{places.length} places to stay in {activeCity}</b>
                 <SortingList />
                 <div className="cities__places-list places__list tabs__content">
-                  <PlaceList placeName="MAIN"/>
+                  <PlaceList places={places} placeName="MAIN"/>
                 </div>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map activeCity={activeCity}/>
+                  <Map activeCity={activeCity} places={places}/>
                 </section>
               </div>
             </div>
