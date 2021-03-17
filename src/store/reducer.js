@@ -9,6 +9,8 @@ const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   isDataLoaded: false,
   authorizationInfo: {},
+  favoritesPlaces: [],
+  isDataFavoriteLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -18,6 +20,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         places: action.payload,
         isDataLoaded: true
+      };
+
+    case ActionType.LOAD_FAVORITES_PLACES:
+      return {
+        ...state,
+        favoritesPlaces: action.payload,
+        isDataFavoriteLoaded: true
       };
 
     case ActionType.CHANGE_CITY:

@@ -6,6 +6,7 @@ export const ActionType = {
   REQUIRED_AUTHORIZATION: `requiredAuthorization`,
   REDIRECT_TO_ROUTE: `redirectToRoute`,
   AUTHORIZATION_INFO: `authorizationInfo`,
+  LOAD_FAVORITES_PLACES: `loadFavoritesPlaces`
 };
 
 export const ActionCreator = {
@@ -25,6 +26,12 @@ export const ActionCreator = {
     type: ActionType.LOAD_PLACES,
     payload: places
   }),
+
+  loadFavoritesPlaces: (favoritesPlaces) => ({
+    type: ActionType.LOAD_FAVORITES_PLACES,
+    payload: favoritesPlaces
+  }),
+
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status,
