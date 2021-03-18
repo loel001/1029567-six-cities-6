@@ -7,6 +7,7 @@ import LoadingScreen from "../loading-screen/loading-screen";
 import {reviewsPropTypes} from '../../common/prop-types';
 import {fetchPropertyReviews} from '../../store/api-actions';
 import {AuthorizationStatus} from "../../common/const";
+import {ActionCreator} from "../../store/action";
 
 
 const ReviewWrapper = (props) => {
@@ -15,13 +16,15 @@ const ReviewWrapper = (props) => {
     placeId,
     loadReviews,
     isReviewsLoaded,
-    propertyReviews
+    propertyReviews,
+    resetIsReviewsLoaded
   } = props;
 
   useEffect(() => {
     if (!isReviewsLoaded) {
       loadReviews(placeId);
     }
+    return () => resetIsReviewsLoaded();
   }, [placeId]);
 
   if (!isReviewsLoaded) {
@@ -51,7 +54,8 @@ ReviewWrapper.propTypes = {
   placeId: PropTypes.string.isRequired,
   isReviewsLoaded: PropTypes.bool.isRequired,
   loadReviews: PropTypes.func.isRequired,
-  propertyReviews: reviewsPropTypes
+  propertyReviews: reviewsPropTypes,
+  resetIsReviewsLoaded: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -63,6 +67,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   loadReviews(id) {
     dispatch(fetchPropertyReviews(id));
+  },
+  resetIsReviewsLoaded() {
+    dispatch(ActionCreator.resetIsReviewsLoaded());
   },
 });
 

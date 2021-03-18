@@ -7,7 +7,8 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: `redirectToRoute`,
   AUTHORIZATION_INFO: `authorizationInfo`,
   LOAD_FAVORITES_PLACES: `loadFavoritesPlaces`,
-  LOAD_REVIEWS: `loadReviews`
+  LOAD_REVIEWS: `loadReviews`,
+  RESET_IS_REVIEWS_LOADED: `resetIsReviewsLoaded`
 };
 
 export const ActionCreator = {
@@ -45,10 +46,11 @@ export const ActionCreator = {
     type: ActionType.AUTHORIZATION_INFO,
     payload: info
   }),
-  loadReviews: (reviews) => {
-    return {
-      type: ActionType.LOAD_REVIEWS,
-      payload: reviews
-    };
-  },
+  loadReviews: (reviews) => ({
+    type: ActionType.LOAD_REVIEWS,
+    payload: reviews
+  }),
+  resetIsReviewsLoaded: () => ({
+    type: ActionType.RESET_IS_REVIEWS_LOADED
+  })
 };

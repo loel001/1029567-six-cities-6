@@ -13,25 +13,31 @@ const App = () => {
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route exact path={AppRoute.MAIN}>
-          <MainPage />
+        <Route exact path={AppRoute.MAIN}
+          render={() => <MainPage />}
+        >
         </Route >
-        <Route exact path={AppRoute.LOGIN}>
-          <Login />
+        <Route exact path={AppRoute.LOGIN}
+          render={() => <Login />}
+        >
         </Route>
         <PrivateRoute exact
           path={AppRoute.FAVORITES}
           render={() => <Favorites />}
         >
         </PrivateRoute>
-        <Route exact path={AppRoute.OFFER}>
-          <Property />
+        <Route exact
+          path={AppRoute.OFFER}
+          render={() => <Property />}
+        >
         </Route>
-        <Route exact path={AppRoute.ERROR}>
-          <NotFoundPage />
+        <Route exact path={AppRoute.ERROR}
+          render={() => <NotFoundPage />}
+        >
         </Route>
-        <Route>
-          <NotFoundPage />
+        <Route
+          render={() => <NotFoundPage />}
+        >
         </Route>
       </Switch>
     </BrowserRouter>

@@ -67,6 +67,13 @@ const reducer = (state = initialState, action) => {
         propertyReviews: action.payload,
         isReviewsLoaded: true
       });
+
+    case ActionType.RESET_IS_REVIEWS_LOADED:
+      return ({
+        ...state,
+        propertyReviews: [],
+        isReviewsLoaded: false
+      });
   }
 
   return state;
