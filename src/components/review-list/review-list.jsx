@@ -22,4 +22,4 @@ ReviewList.propTypes = {
   reviews: reviewsPropTypes,
 };
 
-export default ReviewList;
+export default React.memo(ReviewList);

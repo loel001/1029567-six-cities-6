@@ -1,18 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../common/const';
 import {useHistory} from 'react-router-dom';
 import {logOut} from '../../store/api-actions';
 
-const Header = (props) => {
-  const {authorizationStatus, authorizationInfo, handelUserLogout} = props;
+const Header = () => {
+  const dispatch = useDispatch();
+  const {authorizationStatus} = useSelector((state) => state.USER);
+  const {authorizationInfo} = useSelector((state) => state.USER);
   const history = useHistory();
 
   const handelPushLoginScreen = (evt) => {
     evt.preventDefault();
     history.push(AppRoute.LOGIN);
+  };
+
+  const handelUserLogout = () => {
+    dispatch(logOut());
   };
 
   return (
@@ -45,24 +50,4 @@ const Header = (props) => {
   );
 };
 
-Header.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-  authorizationInfo: PropTypes.shape({
-    email: PropTypes.string,
-    password: PropTypes.string,
-  }),
-  handelUserLogout: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  authorizationInfo: state.authorizationInfo,
-});
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    handelUserLogout: () => dispatch(logOut())
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

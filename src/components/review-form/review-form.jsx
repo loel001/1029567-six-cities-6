@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 import {sendPropertyReview} from "../../store/api-actions";
 import {MIN_SIMBOL_REVIEW} from '../../common/const';
+import {useDispatch} from 'react-redux';
 
 const ReviewForm = (props) => {
-  const {sendReview, placeId} = props;
+  const {placeId} = props;
+  const dispatch = useDispatch();
+
   const [commentForm, setCommentForm] = React.useState({
     rating: null,
     comment: ``
@@ -14,7 +16,7 @@ const ReviewForm = (props) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    sendReview(placeId, commentForm);
+    dispatch(sendPropertyReview(placeId, commentForm));
 
     setCommentForm({
       ...commentForm,
@@ -95,20 +97,7 @@ const ReviewForm = (props) => {
 };
 
 ReviewForm.propTypes = {
-  sendReview: PropTypes.func.isRequired,
   placeId: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  propertyReviews: state.propertyReviews
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  sendReview(id, formData) {
-    dispatch(sendPropertyReview(id, formData));
-  },
-});
-
-export {ReviewForm};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewForm);
+export default ReviewForm;

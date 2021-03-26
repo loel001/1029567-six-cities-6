@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
-import {connect} from "react-redux";
-import PropTypes from "prop-types";
-import {ActionCreator} from '../../store/action';
 import {SortingTypes} from '../../common/const';
+import {changeSorting} from '../../store/action';
+import {useSelector, useDispatch} from 'react-redux';
 
-const SortingList = (props) => {
+const SortingList = () => {
 
-  const {activeSorting, onSortingChange} = props;
+  const {activeSorting} = useSelector((state) => state.PLACES);
 
+  const dispatch = useDispatch();
   const [openedSorting, setOpenedSorting] = useState(false);
 
   const handleSortingClick = () => {
@@ -15,7 +15,7 @@ const SortingList = (props) => {
   };
 
   const handleSortingChange = (evt) => {
-    onSortingChange(evt.target.innerText);
+    dispatch(changeSorting(evt.target.innerText));
     setOpenedSorting(false);
   };
 
@@ -41,21 +41,4 @@ const SortingList = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  activeSorting: state.activeSorting
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSortingChange(selectedSorting) {
-    dispatch(ActionCreator.changeSorting(selectedSorting));
-  },
-});
-
-SortingList.propTypes = {
-  activeSorting: PropTypes.string.isRequired,
-  onSortingChange: PropTypes.func.isRequired,
-};
-
-export {SortingList};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SortingList);
+export default React.memo(SortingList);

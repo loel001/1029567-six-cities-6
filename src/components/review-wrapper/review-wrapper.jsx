@@ -1,30 +1,26 @@
 import React, {useEffect} from "react";
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import ReviewForm from '../review-form/review-form';
 import ReviewList from "../review-list/review-list";
 import LoadingScreen from "../loading-screen/loading-screen";
-import {reviewsPropTypes} from '../../common/prop-types';
 import {fetchPropertyReviews} from '../../store/api-actions';
 import {AuthorizationStatus} from "../../common/const";
-import {ActionCreator} from "../../store/action";
+import {resetIsReviewsLoaded} from '../../store/action';
+import PropTypes from 'prop-types';
 
 
-const ReviewWrapper = (props) => {
-  const {
-    authorizationStatus,
-    placeId,
-    loadReviews,
-    isReviewsLoaded,
-    propertyReviews,
-    resetIsReviewsLoaded
-  } = props;
+const ReviewWrapper = ({placeId}) => {
+
+  const {authorizationStatus} = useSelector((state) => state.USER);
+  const {isReviewsLoaded, propertyReviews} = useSelector((state) => state.DATA);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isReviewsLoaded) {
-      loadReviews(placeId);
+      dispatch(fetchPropertyReviews(placeId));
     }
-    return () => resetIsReviewsLoaded();
+    return () => dispatch(resetIsReviewsLoaded());
   }, [placeId]);
 
   if (!isReviewsLoaded) {
@@ -50,29 +46,7 @@ const ReviewWrapper = (props) => {
 };
 
 ReviewWrapper.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-  placeId: PropTypes.string.isRequired,
-  isReviewsLoaded: PropTypes.bool.isRequired,
-  loadReviews: PropTypes.func.isRequired,
-  propertyReviews: reviewsPropTypes,
-  resetIsReviewsLoaded: PropTypes.func.isRequired
+  placeId: PropTypes.string.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  isReviewsLoaded: state.isReviewsLoaded,
-  propertyReviews: state.propertyReviews,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  loadReviews(id) {
-    dispatch(fetchPropertyReviews(id));
-  },
-  resetIsReviewsLoaded() {
-    dispatch(ActionCreator.resetIsReviewsLoaded());
-  },
-});
-
-export {ReviewWrapper};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewWrapper);
+export default ReviewWrapper;

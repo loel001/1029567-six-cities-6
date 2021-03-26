@@ -1,13 +1,14 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {connect} from 'react-redux';
 import leaflet from 'leaflet';
-import PropTypes from 'prop-types';
 import "leaflet/dist/leaflet.css";
 import {placesPropTypes} from "../../common/prop-types";
+import {useSelector} from 'react-redux';
 
 const Map = (props) => {
 
-  const {places, activePlaceId, activeCity} = props;
+  const {places} = props;
+  const {activePlaceId} = useSelector((state) => state.PLACES);
+  const {activeCity} = useSelector((state) => state.PLACES);
 
   const mapRef = useRef();
   const [mapLeaflet, setMapLeaflet] = useState(null);
@@ -70,18 +71,8 @@ const Map = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  activeCity: state.activeCity,
-  activePlaceId: state.activePlaceId
-});
-
 Map.propTypes = {
   places: placesPropTypes,
-  activePlaceId: PropTypes.number,
-  activeCity: PropTypes.string.isRequired
 };
 
-
-export {Map};
-
-export default connect(mapStateToProps, null)(Map);
+export default Map;

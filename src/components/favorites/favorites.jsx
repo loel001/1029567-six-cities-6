@@ -1,20 +1,19 @@
 import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {placesPropTypes} from "../../common/prop-types";
+import {useDispatch, useSelector} from 'react-redux';
 import FavoritesCity from "./favorites-city";
 import Header from "../header/header";
 import Footer from "../footer/footer";
 import FavoritesEmpty from "../favorites-empty/favorites-empty";
 import {fetchFavoritePlaceList} from "../../store/api-actions";
 import LoadingScreen from "../loading-screen/loading-screen";
-import PropTypes from "prop-types";
 
-const Favorites = (props) => {
+const Favorites = () => {
+  const dispatch = useDispatch();
+  const {isDataFavoriteLoaded, favoritesPlaces} = useSelector((state) => state.DATA);
 
-  const {favoritesPlaces, isDataFavoriteLoaded, onLoadData} = props;
   useEffect(() => {
     if (!isDataFavoriteLoaded) {
-      onLoadData();
+      dispatch(fetchFavoritePlaceList());
     }
   }, [isDataFavoriteLoaded]);
 
@@ -57,23 +56,4 @@ const Favorites = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  favoritesPlaces: state.favoritesPlaces,
-  isDataFavoriteLoaded: state.isDataFavoriteLoaded,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData() {
-    dispatch(fetchFavoritePlaceList());
-  },
-});
-
-Favorites.propTypes = {
-  favoritesPlaces: placesPropTypes,
-  isDataFavoriteLoaded: PropTypes.bool.isRequired,
-  onLoadData: PropTypes.func.isRequired,
-};
-
-export {Favorites};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
+export default Favorites;
