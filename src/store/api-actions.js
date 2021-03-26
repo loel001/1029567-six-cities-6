@@ -5,10 +5,12 @@ import {
   loadPlaces,
   loadFavoritesPlaces,
   loadReviews,
+  updateFavoritePlace,
+  loadPropertyData,
+  loadPropertyNearby
 } from './action';
 import {AuthorizationStatus, AppRoute} from "../common/const";
 import {adaptPlaceToClient, adaptReviewToClient} from "./adapter";
-import {api as loadApi} from '../index';
 
 export const fetchPlaceList = () => (dispatch, _getState, api) => (
   api.get(AppRoute.HOTELS)
@@ -44,14 +46,18 @@ export const logOut = () => (dispatch, _getState, api) => (
     .catch(() => {})
 );
 
-export const fetchProperty = (id) => {
-  return loadApi.get(`${AppRoute.HOTELS}/${id}`)
-    .then(({data}) => adaptPlaceToClient(data));
+export const fetchProperty = (id) => (dispatch, _getState, api) => {
+  api.get(`${AppRoute.HOTELS}/${id}`)
+    .then(({data}) => adaptPlaceToClient(data))
+    .then((data) => dispatch(loadPropertyData(data)))
+    .catch(() => {});
 };
 
-export const fetchNearPlaces = (id) => {
-  return loadApi.get(`${AppRoute.HOTELS}/${id}/nearby`)
-    .then(({data}) => data.map((it) => adaptPlaceToClient(it)));
+export const fetchNearPlaces = (id) => (dispatch, _getState, api) => {
+  api.get(`${AppRoute.HOTELS}/${id}/nearby`)
+    .then(({data}) => data.map((it) => adaptPlaceToClient(it)))
+    .then((data) => dispatch(loadPropertyNearby(data)))
+    .catch(() => {});
 };
 
 export const fetchPropertyReviews = (placeId) => (dispatch, _getState, api) => {
@@ -65,3 +71,9 @@ export const sendPropertyReview = (id, {rating, comment}) => (dispatch, _getStat
     .then(({data}) => dispatch(loadReviews(data.map((review) => adaptReviewToClient(review)))))
     .catch(() => {});
 };
+
+export const changeFavorite = ({id, status}) => (dispatch, _getState, api) => (
+  api.post(`/favorite/${id}/${status}`)
+    .then(({data}) => (adaptPlaceToClient(data)))
+    .then((data) => dispatch(updateFavoritePlace(data)))
+);

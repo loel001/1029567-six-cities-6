@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {useHistory, useParams} from 'react-router-dom';
+import React, {useEffect} from 'react';
+import {useParams} from 'react-router-dom';
 import {MAX_PROPERTY_IMAGES, MAX_NUMBER_PIN} from '../../common/const';
 import {getNumberStarts} from '../../common/utils';
 import ReviewWrapper from '../review-wrapper/review-wrapper';
@@ -7,35 +7,22 @@ import Map from "../map/map";
 import PlaceList from "../place-list/place-list";
 import Header from "../header/header";
 import {fetchNearPlaces, fetchProperty} from '../../store/api-actions';
-import {AppRoute} from '../../common/const';
+import {useDispatch, useSelector} from 'react-redux';
 import LoadingScreen from "../loading-screen/loading-screen";
+import ButtonIsFavorite from "../button-is-favorite/button-is-favorite";
 
 const Property = () => {
-  const [isPropertyLoaded, setPropertyLoaded] = useState(false);
-  const [currentProperty, setCurrentProperty] = useState([]);
-  const [nearPlaces, setNearPlaces] = useState([]);
-  const [isNearPlacesLoaded, setNearPlacesLoaded] = useState(false);
-  const history = useHistory();
+  const dispatch = useDispatch();
   let {id} = useParams();
 
-  useEffect(() => {
-    if (!isPropertyLoaded) {
-      fetchProperty(id)
-        .then((data) => setCurrentProperty(data))
-        .then(() => setPropertyLoaded(true))
-        .catch(() => history.push(AppRoute.ERROR));
-    }
-  }, [isPropertyLoaded, id]);
+  const {isInfoLoaded, isNearbyLoaded, currentProperty, nearPlaces} = useSelector((state) => state.DATA);
 
   useEffect(() => {
-    if (!isNearPlacesLoaded) {
-      fetchNearPlaces(id)
-        .then((data) => setNearPlaces(data))
-        .then(() => setNearPlacesLoaded(true));
-    }
-  }, [isNearPlacesLoaded, id]);
+    dispatch(fetchProperty(id));
+    dispatch(fetchNearPlaces(id));
+  }, [id, isNearbyLoaded, isInfoLoaded]);
 
-  if (!(isPropertyLoaded && isNearPlacesLoaded)) {
+  if (!(isInfoLoaded) && !(isNearbyLoaded)) {
     return (
       <LoadingScreen />
     );
@@ -52,10 +39,10 @@ const Property = () => {
     price,
     rating,
     title,
-    type
+    type,
+    isFavorite,
+    city
   } = currentProperty;
-
-  const city = currentProperty.city.name;
 
   const renderIsPremium = () => {
     return (
@@ -89,13 +76,7 @@ const Property = () => {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark">
-                    </use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <ButtonIsFavorite nameButton={`PROPERTY`} isFavorite={isFavorite} id={id}/>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -153,7 +134,7 @@ const Property = () => {
             </div>
           </div>
           <section className="property__map map">
-            <Map activeCity={city} places={nearPlaces.slice(0, MAX_NUMBER_PIN)} />
+            <Map activeCity={city.name} places={nearPlaces.slice(0, MAX_NUMBER_PIN)} />
           </section>
         </section>
         <div className="container">

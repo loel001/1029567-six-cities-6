@@ -2,13 +2,11 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {placePropTypes} from '../../common/prop-types';
-
 import {getNumberStarts} from '../../common/utils';
 import {PlaceSettings} from '../../common/const';
+import ButtonIsFavorite from "../button-is-favorite/button-is-favorite";
 
-const Place = (props) => {
-
-  const {setActivePlace, unsetActivePlace, place, placeName} = props;
+const Place = ({setActivePlace, unsetActivePlace, place, placeName}) => {
 
   const {
     id,
@@ -46,15 +44,7 @@ const Place = (props) => {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button
-            className={`place-card__bookmark-button ${isFavorite ? `place-card__bookmark-button--active ` : ``}button`}
-            type="button"
-          >
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <ButtonIsFavorite nameButton={`PLACE`} isFavorite={isFavorite} id={String(id)} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

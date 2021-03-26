@@ -59,3 +59,20 @@ export const AppRoute = {
   OFFER: `/offer/:id`,
   NEARBY: `nearby`
 };
+
+export const ButtonTypes = {
+  PLACE: {
+    noFavorite: `place-card__bookmark-button`,
+    favorite: `place-card__bookmark-button--active`,
+    icon: `place-card__bookmark-icon`,
+    width: `18`,
+    height: `19`
+  },
+  PROPERTY: {
+    noFavorite: `property__bookmark-button`,
+    favorite: `property__bookmark-button--active`,
+    icon: `property__bookmark-icon`,
+    width: `31`,
+    height: `33`
+  }
+};

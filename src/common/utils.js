@@ -1,11 +1,6 @@
 import {MAX_NUMBER_STARS} from './const';
 import {SortingTypes} from "./const";
 
-export const formatString = (string) => {
-  const strings = string.split(` `);
-  return strings.map((it) => it[0].toUpperCase() + it.slice(1)).join(` `);
-};
-
 export const getNumberStarts = (rating) => {
   return `${rating / MAX_NUMBER_STARS * 100}%`;
 };
@@ -25,4 +20,20 @@ export const sortPlaces = (places, sortingType) => {
     default:
       return [...places];
   }
+};
+
+const deletePlace = (places, deletedPlace) => {
+  return places.filter((place) => place.id !== deletedPlace.id);
+};
+
+export const updatePlaces = (places, updatedPlace) => {
+  const offerIndex = places.findIndex((offer) => offer.id === updatedPlace.id);
+
+  return [...places.slice(0, offerIndex),
+    updatedPlace,
+    ...places.slice(offerIndex + 1)];
+};
+
+export const changeFavoritePlaces = (places, updatedPlace) => {
+  return updatedPlace.isFavorite ? [updatedPlace, ...places] : deletePlace(places, updatedPlace);
 };

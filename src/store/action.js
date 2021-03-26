@@ -10,7 +10,10 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: `data/redirectToRoute`,
   LOAD_FAVORITES_PLACES: `data/loadFavoritesPlaces`,
   LOAD_REVIEWS: `data/loadReviews`,
-  RESET_IS_REVIEWS_LOADED: `data/resetIsReviewsLoaded`
+  RESET_IS_REVIEWS_LOADED: `data/resetIsReviewsLoaded`,
+  UPDATE_FAVORITE_PLACE: `data/updateFavoritePlace`,
+  LOAD_PROPERTY_DATA: `data/loadPropertyData`,
+  LOAD_PROPERTY_NEARBY: `data/loadPropertyNearby`
 };
 
 export const changeCity = createAction(ActionType.CHANGE_CITY, (selectedCity) => {
@@ -68,3 +71,15 @@ export const loadReviews = createAction(ActionType.LOAD_REVIEWS, (reviews) => {
 });
 
 export const resetIsReviewsLoaded = createAction(ActionType.RESET_IS_REVIEWS_LOADED);
+
+export const updateFavoritePlace = createAction(ActionType.UPDATE_FAVORITE_PLACE, (placeData) => ({
+  payload: placeData,
+}));
+
+export const loadPropertyData = createAction(ActionType.LOAD_PROPERTY_DATA, (propertyData) => ({
+  payload: propertyData,
+}));
+
+export const loadPropertyNearby = createAction(ActionType.LOAD_PROPERTY_NEARBY, (nearblyPlaces) => ({
+  payload: nearblyPlaces,
+}));
