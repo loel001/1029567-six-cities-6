@@ -6,8 +6,8 @@ import {useSelector, useDispatch} from 'react-redux';
 const SortingList = () => {
 
   const {activeSorting} = useSelector((state) => state.PLACES);
-
   const dispatch = useDispatch();
+
   const [openedSorting, setOpenedSorting] = useState(false);
 
   const handleSortingClick = () => {

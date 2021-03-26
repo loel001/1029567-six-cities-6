@@ -4,8 +4,7 @@ import {sendPropertyReview} from "../../store/api-actions";
 import {MIN_SIMBOL_REVIEW} from '../../common/const';
 import {useDispatch} from 'react-redux';
 
-const ReviewForm = (props) => {
-  const {placeId} = props;
+const ReviewForm = ({placeId}) => {
   const dispatch = useDispatch();
 
   const [commentForm, setCommentForm] = React.useState({

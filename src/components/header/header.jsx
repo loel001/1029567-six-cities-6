@@ -7,8 +7,7 @@ import {logOut} from '../../store/api-actions';
 
 const Header = () => {
   const dispatch = useDispatch();
-  const {authorizationStatus} = useSelector((state) => state.USER);
-  const {authorizationInfo} = useSelector((state) => state.USER);
+  const {authorizationStatus, authorizationInfo} = useSelector((state) => state.USER);
   const history = useHistory();
 
   const handelPushLoginScreen = (evt) => {

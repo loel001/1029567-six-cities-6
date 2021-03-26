@@ -7,8 +7,7 @@ import {useSelector} from 'react-redux';
 const Map = (props) => {
 
   const {places} = props;
-  const {activePlaceId} = useSelector((state) => state.PLACES);
-  const {activeCity} = useSelector((state) => state.PLACES);
+  const {activePlaceId, activeCity} = useSelector((state) => state.PLACES);
 
   const mapRef = useRef();
   const [mapLeaflet, setMapLeaflet] = useState(null);

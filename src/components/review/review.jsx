@@ -2,10 +2,7 @@ import React from 'react';
 import {reviewPropTypes} from '../../common/prop-types';
 import {getNumberStarts} from '../../common/utils';
 
-const Review = (props) => {
-
-  const {review} = props;
-
+const Review = ({review}) => {
   const {
     comment,
     rating,
