@@ -13,7 +13,8 @@ export const ActionType = {
   RESET_IS_REVIEWS_LOADED: `data/resetIsReviewsLoaded`,
   UPDATE_FAVORITE_PLACE: `data/updateFavoritePlace`,
   LOAD_PROPERTY_DATA: `data/loadPropertyData`,
-  LOAD_PROPERTY_NEARBY: `data/loadPropertyNearby`
+  LOAD_PROPERTY_NEARBY: `data/loadPropertyNearby`,
+  SET_ERROR_MESSAGE: `data/setErrorMessage`
 };
 
 export const changeCity = createAction(ActionType.CHANGE_CITY, (selectedCity) => {
@@ -72,14 +73,26 @@ export const loadReviews = createAction(ActionType.LOAD_REVIEWS, (reviews) => {
 
 export const resetIsReviewsLoaded = createAction(ActionType.RESET_IS_REVIEWS_LOADED);
 
-export const updateFavoritePlace = createAction(ActionType.UPDATE_FAVORITE_PLACE, (placeData) => ({
-  payload: placeData,
-}));
+export const updateFavoritePlace = createAction(ActionType.UPDATE_FAVORITE_PLACE, (placeData) => {
+  return {
+    payload: placeData,
+  };
+});
 
-export const loadPropertyData = createAction(ActionType.LOAD_PROPERTY_DATA, (propertyData) => ({
-  payload: propertyData,
-}));
+export const loadPropertyData = createAction(ActionType.LOAD_PROPERTY_DATA, (propertyData) => {
+  return {
+    payload: propertyData,
+  };
+});
 
-export const loadPropertyNearby = createAction(ActionType.LOAD_PROPERTY_NEARBY, (nearblyPlaces) => ({
-  payload: nearblyPlaces,
-}));
+export const loadPropertyNearby = createAction(ActionType.LOAD_PROPERTY_NEARBY, (nearblyPlaces) => {
+  return {
+    payload: nearblyPlaces,
+  };
+});
+
+export const setErrorMessage = createAction(ActionType.SET_ERROR_MESSAGE, (message) => {
+  return {
+    payload: message,
+  };
+});

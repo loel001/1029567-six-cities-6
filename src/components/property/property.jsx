@@ -1,28 +1,26 @@
-import React, {useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import React from 'react';
+import {useRouteMatch} from 'react-router-dom';
 import {MAX_PROPERTY_IMAGES, MAX_NUMBER_PIN} from '../../common/const';
 import {getNumberStarts} from '../../common/utils';
 import ReviewWrapper from '../review-wrapper/review-wrapper';
 import Map from "../map/map";
 import PlaceList from "../place-list/place-list";
 import Header from "../header/header";
-import {fetchNearPlaces, fetchProperty} from '../../store/api-actions';
+import {fetchProperty} from '../../store/api-actions';
 import {useDispatch, useSelector} from 'react-redux';
 import LoadingScreen from "../loading-screen/loading-screen";
 import ButtonIsFavorite from "../button-is-favorite/button-is-favorite";
 
 const Property = () => {
+  const {currentProperty, nearPlaces} = useSelector((state) => state.DATA);
+
   const dispatch = useDispatch();
-  let {id} = useParams();
+  const match = useRouteMatch();
+  const pathId = match.params.id.slice(1);
 
-  const {isInfoLoaded, isNearbyLoaded, currentProperty, nearPlaces} = useSelector((state) => state.DATA);
+  if (String(currentProperty.id) !== pathId) {
+    dispatch(fetchProperty(pathId));
 
-  useEffect(() => {
-    dispatch(fetchProperty(id));
-    dispatch(fetchNearPlaces(id));
-  }, [id, isNearbyLoaded, isInfoLoaded]);
-
-  if (!(isInfoLoaded) && !(isNearbyLoaded)) {
     return (
       <LoadingScreen />
     );
@@ -41,7 +39,8 @@ const Property = () => {
     title,
     type,
     isFavorite,
-    city
+    city,
+    id
   } = currentProperty;
 
   const renderIsPremium = () => {
@@ -76,7 +75,7 @@ const Property = () => {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <ButtonIsFavorite nameButton={`PROPERTY`} isFavorite={isFavorite} id={id}/>
+                <ButtonIsFavorite nameButton={`PROPERTY`} isFavorite={isFavorite} id={String({id})}/>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -134,7 +133,7 @@ const Property = () => {
             </div>
           </div>
           <section className="property__map map">
-            <Map activeCity={city.name} places={nearPlaces.slice(0, MAX_NUMBER_PIN)} />
+            <Map city={city} places={nearPlaces.slice(0, MAX_NUMBER_PIN)} />
           </section>
         </section>
         <div className="container">

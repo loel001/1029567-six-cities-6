@@ -3,17 +3,16 @@ import leaflet from 'leaflet';
 import "leaflet/dist/leaflet.css";
 import {placesPropTypes} from "../../common/prop-types";
 import {useSelector} from 'react-redux';
+import PropTypes from "prop-types";
 
-const Map = (props) => {
-
-  const {places} = props;
-  const {activePlaceId, activeCity} = useSelector((state) => state.PLACES);
+const Map = ({places, city}) => {
+  const {activePlaceId} = useSelector((state) => state.PLACES);
 
   const mapRef = useRef();
   const [mapLeaflet, setMapLeaflet] = useState(null);
 
   useEffect(() => {
-    const {latitude, longitude, zoom} = places[0].city.location;
+    const {latitude, longitude, zoom} = city.location;
 
     const iconStandard = leaflet.icon({
       iconUrl: `img/pin.svg`,
@@ -62,7 +61,7 @@ const Map = (props) => {
         marker.remove();
       }
     };
-  }, [places, activePlaceId, activeCity]);
+  }, [places, activePlaceId, city.name]);
 
 
   return (
@@ -72,6 +71,14 @@ const Map = (props) => {
 
 Map.propTypes = {
   places: placesPropTypes,
+  city: PropTypes.shape({
+    location: PropTypes.shape({
+      latitude: PropTypes.number.isRequired,
+      longitude: PropTypes.number.isRequired,
+      zoom: PropTypes.number.isRequired,
+    }),
+    name: PropTypes.string.isRequired,
+  }),
 };
 
 export default Map;

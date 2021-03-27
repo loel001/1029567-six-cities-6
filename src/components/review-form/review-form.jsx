@@ -96,7 +96,7 @@ const ReviewForm = ({placeId}) => {
 };
 
 ReviewForm.propTypes = {
-  placeId: PropTypes.string.isRequired,
+  placeId: PropTypes.number.isRequired,
 };
 
 export default ReviewForm;

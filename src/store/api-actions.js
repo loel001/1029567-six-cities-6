@@ -7,9 +7,10 @@ import {
   loadReviews,
   updateFavoritePlace,
   loadPropertyData,
-  loadPropertyNearby
+  loadPropertyNearby,
+  setErrorMessage
 } from './action';
-import {AuthorizationStatus, AppRoute} from "../common/const";
+import {AuthorizationStatus, AppRoute, HttpCode} from "../common/const";
 import {adaptPlaceToClient, adaptReviewToClient} from "./adapter";
 
 export const fetchPlaceList = () => (dispatch, _getState, api) => (
@@ -47,17 +48,26 @@ export const logOut = () => (dispatch, _getState, api) => (
 );
 
 export const fetchProperty = (id) => (dispatch, _getState, api) => {
-  api.get(`${AppRoute.HOTELS}/${id}`)
-    .then(({data}) => adaptPlaceToClient(data))
-    .then((data) => dispatch(loadPropertyData(data)))
-    .catch(() => {});
-};
+  Promise.all([
+    api.get(`${AppRoute.HOTELS}/${id}`),
+    api.get(`${AppRoute.HOTELS}/${id}/nearby`),
+  ])
+    .then(([offer, nearby]) => {
+      dispatch(loadPropertyData(adaptPlaceToClient(offer.data)));
+      dispatch(loadPropertyNearby(nearby.data.map((nearbyOffer) => adaptPlaceToClient(nearbyOffer))));
+    })
+    .catch((err) => {
+      const {response} = err;
+      switch (response.status) {
+        case HttpCode.NOT_FOUND:
+          dispatch(redirectToRoute(AppRoute.ERROR));
+          break;
 
-export const fetchNearPlaces = (id) => (dispatch, _getState, api) => {
-  api.get(`${AppRoute.HOTELS}/${id}/nearby`)
-    .then(({data}) => data.map((it) => adaptPlaceToClient(it)))
-    .then((data) => dispatch(loadPropertyNearby(data)))
-    .catch(() => {});
+        default:
+          dispatch(setErrorMessage(response.status));
+          break;
+      }
+    });
 };
 
 export const fetchPropertyReviews = (placeId) => (dispatch, _getState, api) => {

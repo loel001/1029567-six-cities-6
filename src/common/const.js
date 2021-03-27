@@ -76,3 +76,7 @@ export const ButtonTypes = {
     height: `33`
   }
 };
+
+export const HttpCode = {
+  NOT_FOUND: 404
+};

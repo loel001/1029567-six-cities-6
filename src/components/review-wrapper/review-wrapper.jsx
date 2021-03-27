@@ -46,7 +46,7 @@ const ReviewWrapper = ({placeId}) => {
 };
 
 ReviewWrapper.propTypes = {
-  placeId: PropTypes.string.isRequired
+  placeId: PropTypes.number.isRequired
 };
 
 export default ReviewWrapper;

@@ -53,7 +53,7 @@ const MainPage = () => {
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map activeCity={activeCity} places={placesCurrent}/>
+                  <Map city={placesCurrent[0].city} places={placesCurrent}/>
                 </section>
               </div>
             </div>

@@ -45,13 +45,6 @@ const data = createReducer(initialState, (builder) => {
     state.isReviewsLoaded = false;
   });
 
-  builder.addCase(updateFavoritePlace, (state, action) => {
-    state.favoritesPlaces = changeFavoritePlaces(state.favoritesPlaces, action.payload);
-    state.places = updatePlaces(state.places, action.payload);
-    state.isDataLoaded = true;
-    state.isDataFavoriteLoaded = true;
-  });
-
   builder.addCase(loadPropertyData, (state, action) => {
     state.currentProperty = action.payload;
     state.isInfoLoaded = true;
@@ -60,6 +53,11 @@ const data = createReducer(initialState, (builder) => {
   builder.addCase(loadPropertyNearby, (state, action) => {
     state.nearPlaces = action.payload;
     state.isNearbyLoaded = true;
+  });
+
+  builder.addCase(updateFavoritePlace, (state, action) => {
+    state.favoritesPlaces = changeFavoritePlaces(state.favoritesPlaces, action.payload);
+    state.places = updatePlaces(state.places, action.payload);
   });
 });
 
