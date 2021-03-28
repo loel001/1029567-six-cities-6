@@ -1,5 +1,5 @@
 import {MAX_NUMBER_STARS} from './const';
-import {SortingTypes} from "./const";
+import {SortingTypes, AppRoute} from "./const";
 
 export const getNumberStarts = (rating) => {
   return `${rating / MAX_NUMBER_STARS * 100}%`;
@@ -37,3 +37,17 @@ export const updatePlaces = (places, updatedPlace) => {
 export const changeFavoritePlaces = (places, updatedPlace) => {
   return updatedPlace.isFavorite ? [updatedPlace, ...places] : deletePlace(places, updatedPlace);
 };
+
+export const updateNearPlaces = (places, updatedPlaces) => {
+  const index = places.findIndex((place) => place.id === updatedPlaces.id);
+
+  if (index === -1) {
+    return places;
+  }
+
+  return [...places.slice(0, index),
+    updatedPlaces,
+    ...places.slice(index + 1)];
+};
+
+export const getProperty = (id) => AppRoute.OFFER.replace(/id/, id);

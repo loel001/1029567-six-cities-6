@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {placePropTypes} from '../../common/prop-types';
-import {getNumberStarts} from '../../common/utils';
+import {getNumberStarts, getProperty} from '../../common/utils';
 import {PlaceSettings} from '../../common/const';
 import ButtonIsFavorite from "../button-is-favorite/button-is-favorite";
 
@@ -27,14 +27,22 @@ const Place = ({setActivePlace, unsetActivePlace, place, placeName}) => {
     );
   };
 
-  const handleMouseEnter = () => setActivePlace(place.id);
-  const handleMouseLeave = () => unsetActivePlace();
+  const handleMouseEnter = () => {
+    if (setActivePlace !== undefined) {
+      setActivePlace(place.id);
+    }
+  };
+  const handleMouseLeave = () => {
+    if (unsetActivePlace !== undefined) {
+      unsetActivePlace();
+    }
+  };
 
   return (
     <article className={`${PlaceSettings[placeName].article} place-card`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       {isPremium ? renderIsPremium() : null}
       <div className={`${PlaceSettings[placeName].image.imageClass} place-card__image-wrapper`}>
-        <Link to={`/offer/${id}`}>
+        <Link to={getProperty(id)}>
           <img className="place-card__image" src={previewImage} width={PlaceSettings[placeName].image.width} height={PlaceSettings[placeName].image.height} alt="Place image"/>
         </Link>
       </div>
@@ -67,8 +75,8 @@ const Place = ({setActivePlace, unsetActivePlace, place, placeName}) => {
 
 Place.propTypes = {
   place: placePropTypes,
-  setActivePlace: PropTypes.func.isRequired,
-  unsetActivePlace: PropTypes.func.isRequired,
+  setActivePlace: PropTypes.func,
+  unsetActivePlace: PropTypes.func,
   placeName: PropTypes.string.isRequired
 };
 

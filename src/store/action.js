@@ -14,7 +14,8 @@ export const ActionType = {
   UPDATE_FAVORITE_PLACE: `data/updateFavoritePlace`,
   LOAD_PROPERTY_DATA: `data/loadPropertyData`,
   LOAD_PROPERTY_NEARBY: `data/loadPropertyNearby`,
-  SET_ERROR_MESSAGE: `data/setErrorMessage`
+  SET_ERROR_MESSAGE: `data/setErrorMessage`,
+  CHANGE_IS_FAVORITE_PROPERTY: `data/changeIsFavoriteProperty`
 };
 
 export const changeCity = createAction(ActionType.CHANGE_CITY, (selectedCity) => {
@@ -96,3 +97,5 @@ export const setErrorMessage = createAction(ActionType.SET_ERROR_MESSAGE, (messa
     payload: message,
   };
 });
+
+export const changeIsFavoriteProperty = createAction(ActionType.CHANGE_IS_FAVORITE_PROPERTY);

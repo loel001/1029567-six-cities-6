@@ -75,7 +75,7 @@ const Property = () => {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <ButtonIsFavorite nameButton={`PROPERTY`} isFavorite={isFavorite} id={String({id})}/>
+                <ButtonIsFavorite nameButton={`PROPERTY`} isFavorite={isFavorite} id={id}/>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -133,17 +133,22 @@ const Property = () => {
             </div>
           </div>
           <section className="property__map map">
-            <Map city={city} places={nearPlaces.slice(0, MAX_NUMBER_PIN)} />
+            {
+              nearPlaces.length && <Map city={city} places={nearPlaces.slice(0, MAX_NUMBER_PIN)} />
+            }
           </section>
         </section>
-        <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              <PlaceList places={nearPlaces.slice(0, MAX_NUMBER_PIN)} placeName="NEAR" />
-            </div>
-          </section>
-        </div>
+        {
+          nearPlaces.length &&
+          <div className="container">
+            <section className="near-places places">
+              <h2 className="near-places__title">Other places in the neighbourhood</h2>
+              <div className="near-places__list places__list">
+                <PlaceList places={nearPlaces.slice(0, MAX_NUMBER_PIN)} placeName="NEAR" />
+              </div>
+            </section>
+          </div>
+        }
       </main>
     </div>
   );

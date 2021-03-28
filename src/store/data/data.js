@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeFavoritePlaces, updatePlaces} from '../../common/utils';
+import {changeFavoritePlaces, updatePlaces, updateNearPlaces} from '../../common/utils';
 
 import {
   loadPlaces,
@@ -8,7 +8,8 @@ import {
   resetIsReviewsLoaded,
   updateFavoritePlace,
   loadPropertyData,
-  loadPropertyNearby
+  loadPropertyNearby,
+  changeIsFavoriteProperty
 } from '../action';
 
 const initialState = {
@@ -58,6 +59,11 @@ const data = createReducer(initialState, (builder) => {
   builder.addCase(updateFavoritePlace, (state, action) => {
     state.favoritesPlaces = changeFavoritePlaces(state.favoritesPlaces, action.payload);
     state.places = updatePlaces(state.places, action.payload);
+    state.nearPlaces = updateNearPlaces(state.nearPlaces, action.payload);
+  });
+
+  builder.addCase(changeIsFavoriteProperty, (state) => {
+    state.currentProperty = Object.assign({}, state.currentProperty, {isFavorite: !state.currentProperty.isFavorite});
   });
 });
 

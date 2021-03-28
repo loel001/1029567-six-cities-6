@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {AppRoute, AuthorizationStatus, ButtonTypes} from '../../common/const';
 import {changeFavorite} from '../../store/api-actions';
 import {useDispatch, useSelector} from 'react-redux';
-import {redirectToRoute} from '../../store/action';
+import {redirectToRoute, changeIsFavoriteProperty} from '../../store/action';
 
 const ButtonIsFavorite = ({id, isFavorite, nameButton}) => {
   const dispatch = useDispatch();
@@ -17,6 +17,9 @@ const ButtonIsFavorite = ({id, isFavorite, nameButton}) => {
         id,
         status: Number(!isFavorite)
       }));
+      if (nameButton === `PROPERTY`) {
+        dispatch(changeIsFavoriteProperty());
+      }
     }
   };
 
@@ -38,7 +41,10 @@ const ButtonIsFavorite = ({id, isFavorite, nameButton}) => {
 };
 
 ButtonIsFavorite.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
   isFavorite: PropTypes.bool.isRequired,
   nameButton: PropTypes.string.isRequired
 };
