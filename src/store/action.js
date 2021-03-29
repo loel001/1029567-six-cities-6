@@ -2,7 +2,6 @@ import {createAction} from '@reduxjs/toolkit';
 
 export const ActionType = {
   AUTHORIZATION_INFO: `user/authorizationInfo`,
-  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   CHANGE_CITY: `places/changeCity`,
   CHANGE_SORTING: `places/changeSorting`,
   GET_ACTIVE_PLACE: `places/getActivePlace`,
