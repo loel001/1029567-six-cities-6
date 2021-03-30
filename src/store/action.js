@@ -14,7 +14,8 @@ export const ActionType = {
   LOAD_PROPERTY_DATA: `data/loadPropertyData`,
   LOAD_PROPERTY_NEARBY: `data/loadPropertyNearby`,
   SET_ERROR_MESSAGE: `data/setErrorMessage`,
-  CHANGE_IS_FAVORITE_PROPERTY: `data/changeIsFavoriteProperty`
+  CHANGE_IS_FAVORITE_PROPERTY: `data/changeIsFavoriteProperty`,
+  REQUIRED_AUTHORIZATION: `user/requireAuthorization`
 };
 
 export const changeCity = createAction(ActionType.CHANGE_CITY, (selectedCity) => {
