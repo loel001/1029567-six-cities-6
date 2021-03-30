@@ -173,21 +173,19 @@ describe(`Async operation work correctly`, () => {
   });
 
   it(`Should make a correct API call to /logout`, () => {
-    const apiMock = new MockAdapter(api);
+    const mockApi = new MockAdapter(api);
     const dispatch = jest.fn();
     const logoutLoader = logOut();
 
-    apiMock
-      .onPost(AppRoute.LOGOUT)
-      .reply(200, {});
+    mockApi.onGet(AppRoute.LOGOUT).reply(200);
 
     return logoutLoader(dispatch, () => {}, api)
-      .then(() => {
+      .then(()=> {
         expect(dispatch).toHaveBeenCalledTimes(2);
 
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.AUTHORIZATION_INFO,
-          payload: {}
+          payload: {},
         });
 
         expect(dispatch).toHaveBeenNthCalledWith(2, {
@@ -282,7 +280,9 @@ describe(`Async operation work correctly`, () => {
               "rating": 4,
               "user": {
                 "avatarUrl": `img/1.png`,
+                "id": 4,
                 "isPro": false,
+                "name": `Max`
               }
             }]
         });

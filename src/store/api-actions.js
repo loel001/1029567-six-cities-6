@@ -47,7 +47,7 @@ export const logOut = () => (dispatch, _getState, api) => (
     .catch(() => {})
 );
 
-export const fetchProperty = (id) => (dispatch, _getState, api) => {
+export const fetchProperty = (id) => (dispatch, _getState, api) => (
   Promise.all([
     api.get(`${AppRoute.HOTELS}/${id}`),
     api.get(`${AppRoute.HOTELS}/${id}/nearby`),
@@ -67,20 +67,20 @@ export const fetchProperty = (id) => (dispatch, _getState, api) => {
           dispatch(setErrorMessage(response.status));
           break;
       }
-    });
-};
+    })
+);
 
-export const fetchPropertyReviews = (placeId) => (dispatch, _getState, api) => {
+export const fetchPropertyReviews = (placeId) => (dispatch, _getState, api) => (
   api.get(`${AppRoute.COMMENTS}/${placeId}`)
     .then(({data}) => dispatch(loadReviews(data.map((review) => adaptReviewToClient(review)))))
-    .catch(() => {});
-};
+    .catch(() => {})
+);
 
-export const sendPropertyReview = (id, {rating, comment}) => (dispatch, _getState, api) => {
+export const sendPropertyReview = (id, {rating, comment}) => (dispatch, _getState, api) => (
   api.post(`${AppRoute.COMMENTS}/${id}`, {rating, comment})
     .then(({data}) => dispatch(loadReviews(data.map((review) => adaptReviewToClient(review)))))
-    .catch(() => {});
-};
+    .catch(() => {})
+);
 
 export const changeFavorite = ({id, status}) => (dispatch, _getState, api) => (
   api.post(`/favorite/${id}/${status}`)
