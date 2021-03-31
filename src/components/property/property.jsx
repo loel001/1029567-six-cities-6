@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useRouteMatch} from 'react-router-dom';
 import {MAX_PROPERTY_IMAGES, MAX_NUMBER_PIN} from '../../common/const';
 import {getNumberStarts} from '../../common/utils';
@@ -16,11 +16,15 @@ const Property = () => {
 
   const dispatch = useDispatch();
   const match = useRouteMatch();
-  const pathId = match.params.id.slice(1);
+  const pathId = match.params.id;
+
+  useEffect(() => {
+    if (String(currentProperty.id) !== pathId) {
+      dispatch(fetchProperty(pathId));
+    }
+  }, [pathId]);
 
   if (String(currentProperty.id) !== pathId) {
-    dispatch(fetchProperty(pathId));
-
     return (
       <LoadingScreen />
     );

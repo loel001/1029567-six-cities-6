@@ -434,7 +434,7 @@ describe(`Test routing`, () => {
 
   it(`Render 'Property' when user navigate to '/offer/:id' url`, () => {
     const history = createMemoryHistory();
-    history.push(`/offer/:1`);
+    history.push(`/offer/1`);
 
     render(
         <redux.Provider store={mockStore(testData)}>

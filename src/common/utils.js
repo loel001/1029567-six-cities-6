@@ -50,4 +50,4 @@ export const updateNearPlaces = (places, updatedPlaces) => {
     ...places.slice(index + 1)];
 };
 
-export const getProperty = (id) => AppRoute.OFFER.replace(/id/, id);
+export const getProperty = (id) => AppRoute.OFFER.replace(/:id/, id);
