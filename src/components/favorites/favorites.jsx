@@ -29,11 +29,11 @@ const Favorites = () => {
     <div className={`page ${favoritesPlaces.length > 0 ? `` : `page page--favorites-empty`}`}>
       <Header />
       {favoritesPlaces.length > 0 ?
-        <main className="page__main page__main--favorites">
+        <main className="page__main page__main--favorites" data-testid="favorites">
           <div className="page__favorites-container container">
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
-              <ul className="favorites__list">
+              <ul className="favorites__list" data-testid="favorites-list">
                 {favoriteCities.map((city, index) => {
                   const favoriteCityPlaces = favoritesPlaces.filter((place) => place.city.name === city);
                   return (

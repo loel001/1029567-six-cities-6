@@ -72,7 +72,7 @@ const Property = () => {
             <div className="property__wrapper">
               {isPremium ? renderIsPremium() : null}
               <div className="property__name-wrapper">
-                <h1 className="property__name">
+                <h1 className="property__name" data-testid="property-name">
                   {title}
                 </h1>
                 <ButtonIsFavorite nameButton={`PROPERTY`} isFavorite={isFavorite} id={id}/>
@@ -88,7 +88,7 @@ const Property = () => {
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>
               </div>
-              <ul className="property__features">
+              <ul className="property__features" data-testid="property-features">
                 <li className="property__feature property__feature--entire">
                   {type}
                 </li>
@@ -113,7 +113,7 @@ const Property = () => {
                   ))}
                 </ul>
               </div>
-              <div className="property__host">
+              <div className="property__host" data-testid="property-host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">

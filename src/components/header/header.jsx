@@ -20,7 +20,7 @@ const Header = () => {
   };
 
   return (
-    <header className="header">
+    <header className="header" data-testid="header">
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
@@ -28,7 +28,7 @@ const Header = () => {
               <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
             </Link>
           </div>
-          <nav className="header__nav">
+          <nav className="header__nav" data-testid="header-nav">
             <ul className="header__nav-list">
               <li className="header__nav-item user">
                 {authorizationStatus === AuthorizationStatus.AUTH ?

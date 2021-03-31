@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import leaflet from 'leaflet';
-import "leaflet/dist/leaflet.css";
+import 'leaflet/dist/leaflet.css';
 import {placesPropTypes} from "../../common/prop-types";
 import {useSelector} from 'react-redux';
 import PropTypes from "prop-types";
@@ -65,7 +65,7 @@ const Map = ({places, city}) => {
 
 
   return (
-    <div style={{height: `100%`}} ref={mapRef}></div>
+    <div style={{height: `100%`}} ref={mapRef} data-testid="map"></div>
   );
 };
 

@@ -33,21 +33,21 @@ const MainPage = () => {
     <div className="page page--gray page--main">
       <Header />
 
-      <main className={`page__main page__main--index ${placesCurrent.length > 0 ? `` : `page__main--index-empty`}`}>
+      <main className={`page__main page__main--index ${placesCurrent.length > 0 ? `` : `page__main--index-empty`}`} data-testid="main">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
             <CitiesList />
           </section>
         </div>
-        <div className="cities">
+        <div className="cities" data-testid="cities">
           {placesCurrent.length > 0 ?
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{placesCurrent.length} places to stay in {activeCity}</b>
                 <SortingList />
-                <div className="cities__places-list places__list tabs__content">
+                <div className="cities__places-list places__list tabs__content" data-testid="places">
                   <PlaceList places={placesCurrent} placeName="MAIN"/>
                 </div>
               </section>

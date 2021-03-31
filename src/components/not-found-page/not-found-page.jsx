@@ -11,7 +11,7 @@ const NotFoundPage = () => {
       <main className="page__main page__main--index">
         <div className="cities">
           <div className="cities__places-container container">
-            <section>
+            <section data-testid="404">
               <h1>404. Page not found</h1>
               <Link to="/">Вернуться на главную</Link>
             </section>
