@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import Header from "../header/header";
+import {AppRoute} from "../../common/const";
 
 const NotFoundPage = () => {
 
@@ -13,7 +14,7 @@ const NotFoundPage = () => {
           <div className="cities__places-container container">
             <section data-testid="404">
               <h1>404. Page not found</h1>
-              <Link to="/">Вернуться на главную</Link>
+              <Link to={AppRoute.MAIN}>Вернуться на главную</Link>
             </section>
           </div>
         </div>

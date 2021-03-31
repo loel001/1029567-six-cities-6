@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import FavoritesCity from "./favorites-city";
+import FavoritesCity from "./favorites-city/favorites-city";
 import Header from "../header/header";
 import Footer from "../footer/footer";
 import FavoritesEmpty from "../favorites-empty/favorites-empty";

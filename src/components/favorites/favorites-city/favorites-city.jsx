@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {placesPropTypes} from '../../common/prop-types';
-import Place from "../place/place";
+import {placesPropTypes} from '../../../common/prop-types';
+import Place from "../../place/place";
+import {Link} from 'react-router-dom';
+import {AppRoute} from "../../../common/const";
 
 const FavoritesCity = (props) => {
 
@@ -11,12 +13,12 @@ const FavoritesCity = (props) => {
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
-          <a className="locations__item-link" href="#">
+          <Link to={AppRoute.MAIN} className="locations__item-link" href="#">
             <span>{city}</span>
-          </a>
+          </Link>
         </div>
       </div>
-      <div className="favorites__places">
+      <div className="favorites__places" data-testid="favorites-places">
         {places.map((place) => (
           <Place
             key={place.id}
