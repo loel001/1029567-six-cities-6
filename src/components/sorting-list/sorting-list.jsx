@@ -20,7 +20,7 @@ const SortingList = () => {
   };
 
   return (
-    <form className="places__sorting" action="#" method="get">
+    <form className="places__sorting" action="#" method="get" data-testid="places-sorting">
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex="0" onClick={handleSortingClick}>
         {activeSorting}

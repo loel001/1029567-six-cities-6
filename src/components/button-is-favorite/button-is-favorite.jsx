@@ -31,6 +31,7 @@ const ButtonIsFavorite = ({id, isFavorite, nameButton}) => {
       onClick={() => cardFavoriteClickHandler()}
       className={`${ButtonTypes[nameButton].noFavorite} ${bookmarkClass} button`}
       type="button"
+      data-testid="button"
     >
       <svg className={ButtonTypes[nameButton].icon} width={ButtonTypes[nameButton].width} height={ButtonTypes[nameButton].height}>
         <use xlinkHref="#icon-bookmark"></use>

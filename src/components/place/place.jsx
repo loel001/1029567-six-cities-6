@@ -39,7 +39,7 @@ const Place = ({setActivePlace, unsetActivePlace, place, placeName}) => {
   };
 
   return (
-    <article className={`${PlaceSettings[placeName].article} place-card`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <article className={`${PlaceSettings[placeName].article} place-card`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} data-testid="place-card">
       {isPremium ? renderIsPremium() : null}
       <div className={`${PlaceSettings[placeName].image.imageClass} place-card__image-wrapper`}>
         <Link to={getProperty(id)}>
@@ -64,7 +64,7 @@ const Place = ({setActivePlace, unsetActivePlace, place, placeName}) => {
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className="place-card__name">
+        <h2 className="place-card__name" data-testid="place-card-name">
           <Link to={`/offer/` + id}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
