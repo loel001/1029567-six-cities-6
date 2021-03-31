@@ -28,7 +28,7 @@ const ReviewWrapper = ({placeId}) => {
   }
 
   return (
-    <section className="property__reviews reviews">
+    <section className="property__reviews reviews" data-testid="property-reviews">
       <h2 className="reviews__title">Reviews &middot;
         <span className="reviews__amount">
           {propertyReviews.length}

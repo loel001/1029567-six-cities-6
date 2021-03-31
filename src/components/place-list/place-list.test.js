@@ -5,7 +5,6 @@ import {createMemoryHistory} from 'history';
 import configureStore from 'redux-mock-store';
 import * as redux from 'react-redux';
 import PlaceList from './place-list';
-import {CIIES} from "../../common/const";
 
 const mockStore = configureStore();
 const history = createMemoryHistory();

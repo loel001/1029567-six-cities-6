@@ -5,7 +5,7 @@ import {reviewsPropTypes} from '../../common/prop-types';
 const ReviewList = ({reviews}) => {
 
   return (
-    <ul className="reviews__list">
+    <ul className="reviews__list" data-testid="reviews-list">
       {reviews.map((review, index) => (
         <Review
           key={index}

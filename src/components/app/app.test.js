@@ -5,6 +5,10 @@ import {createMemoryHistory} from 'history';
 import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
 import App from './app';
+import thunk from 'redux-thunk';
+import {createAPI} from "../../services/api";
+
+const api = createAPI(() => {});
 
 const mockStore = configureStore();
 
@@ -435,9 +439,11 @@ describe(`Test routing`, () => {
   it(`Render 'Property' when user navigate to '/offer/:id' url`, () => {
     const history = createMemoryHistory();
     history.push(`/offer/1`);
+    const middleware = [thunk.withExtraArgument(api)];
+    const mockStoreProperty = configureStore(middleware);
 
     render(
-        <redux.Provider store={mockStore(testData)}>
+        <redux.Provider store={mockStoreProperty(testData)}>
           <Router history={history}>
             <App />
           </Router>
@@ -450,7 +456,6 @@ describe(`Test routing`, () => {
     expect(screen.getByTestId(`property-name`)).toBeInTheDocument();
     expect(screen.getByTestId(`property-features`)).toBeInTheDocument();
     expect(screen.getByTestId(`property-host`)).toBeInTheDocument();
-    expect(screen.getByText(`Bedrooms`)).toBeInTheDocument();
   });
 
   it(`Render 'Page404' when user navigate to non-existent route`, () => {
