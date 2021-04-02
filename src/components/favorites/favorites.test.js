@@ -126,21 +126,23 @@ const testFavoritesPage = {
 };
 
 
-it(`Render 'Favorites'`, () => {
-  const history = createMemoryHistory();
+describe(`Test 'Favorites'`, () => {
+  it(`Render 'Favorites'`, () => {
+    const history = createMemoryHistory();
 
-  render(
-      <redux.Provider store={mockStore(testFavoritesPage)}>
-        <Router history={history}>
-          <Favorites />
-        </Router>
-      </redux.Provider>
-  );
+    render(
+        <redux.Provider store={mockStore(testFavoritesPage)}>
+          <Router history={history}>
+            <Favorites />
+          </Router>
+        </redux.Provider>
+    );
 
-  expect(screen.getByTestId(`header`)).toBeInTheDocument();
-  expect(screen.getByTestId(`header-nav`)).toBeInTheDocument();
+    expect(screen.getByTestId(`header`)).toBeInTheDocument();
+    expect(screen.getByTestId(`header-nav`)).toBeInTheDocument();
 
-  expect(screen.getByText(`Saved listing`)).toBeInTheDocument();
-  expect(screen.getByTestId(`favorites-places`)).toBeInTheDocument();
-  expect(screen.getByTestId(`favorites`)).toBeInTheDocument();
+    expect(screen.getByText(`Saved listing`)).toBeInTheDocument();
+    expect(screen.getByTestId(`favorites-places`)).toBeInTheDocument();
+    expect(screen.getByTestId(`favorites`)).toBeInTheDocument();
+  });
 });

@@ -22,14 +22,14 @@ const SortingList = () => {
   return (
     <form className="places__sorting" action="#" method="get" data-testid="places-sorting">
       <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex="0" onClick={handleSortingClick}>
+      <span className="places__sorting-type" tabIndex="0" onClick={handleSortingClick} data-testid="places-sorting-type">
         {activeSorting}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
       {openedSorting &&
-      <ul className="places__options places__options--custom places__options--opened">
+      <ul className="places__options places__options--custom places__options--opened" data-testid="places-options">
         {Object.values(SortingTypes).map((sortingType, id) => (
           <li className={`places__option ${sortingType === activeSorting ? `places__option--active` : ``}`}
             key={sortingType + id}

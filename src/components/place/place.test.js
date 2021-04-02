@@ -5,6 +5,7 @@ import {createMemoryHistory} from 'history';
 import configureStore from 'redux-mock-store';
 import * as redux from 'react-redux';
 import Place from './place';
+import userEvent from '@testing-library/user-event';
 
 const mockStore = configureStore();
 const history = createMemoryHistory();
@@ -44,18 +45,35 @@ const testPlace = {
   "type": `apartment`
 };
 
-it(`Render 'Place'`, () => {
-  render(
-      <redux.Provider store={mockStore({USER: {authorizationStatus: `NO_AUTH`}})}>
-        <Router history={history}>
-          <Place place={testPlace} placeName="MAIN" />
-        </Router>
-      </redux.Provider>
-  );
+describe(`Test 'Card'`, () => {
+  it(`Render 'Place'`, () => {
+    render(
+        <redux.Provider store={mockStore({USER: {authorizationStatus: `NO_AUTH`}})}>
+          <Router history={history}>
+            <Place place={testPlace} placeName="MAIN" />
+          </Router>
+        </redux.Provider>
+    );
 
-  expect(screen.getByTestId(`place-card`)).toBeInTheDocument();
-  expect(screen.getByTestId(`place-card-name`)).toBeInTheDocument();
+    expect(screen.getByTestId(`place-card`)).toBeInTheDocument();
+    expect(screen.getByTestId(`place-card-name`)).toBeInTheDocument();
 
-  expect(screen.getByText(`Beautiful & luxurious studio at great location`)).toBeInTheDocument();
-  expect(screen.getByText(`apartment`)).toBeInTheDocument();
+    expect(screen.getByText(`Beautiful & luxurious studio at great location`)).toBeInTheDocument();
+    expect(screen.getByText(`apartment`)).toBeInTheDocument();
+  });
+
+  it(`Should call dispatch when user hover on card`, () => {
+    const fakeDispatch = jest.spyOn(redux, `useDispatch`).mockImplementation(() => jest.fn());
+
+    render(
+        <redux.Provider store={mockStore({USER: {authorizationStatus: `NO_AUTH`}})}>
+          <Router history={history}>
+            <Place place={testPlace} placeName="MAIN" />
+          </Router>
+        </redux.Provider>
+    );
+
+    userEvent.hover(screen.getByTestId(`place-card`));
+    expect(fakeDispatch).toBeCalled();
+  });
 });

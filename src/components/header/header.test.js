@@ -8,17 +8,39 @@ import Header from './header';
 
 const mockStore = configureStore();
 
-it(`Render 'Header'`, () => {
-  const history = createMemoryHistory();
+describe(`Test 'Header'`, () => {
+  it(`Render 'Header' with no authorization`, () => {
+    const history = createMemoryHistory();
 
-  render(
-      <redux.Provider store={mockStore({USER: {authorizationStatus: `NO_AUTH`}})}>
-        <Router history={history}>
-          <Header />
-        </Router>
-      </redux.Provider>
-  );
+    render(
+        <redux.Provider store={mockStore({USER: {authorizationStatus: `NO_AUTH`}})}>
+          <Router history={history}>
+            <Header />
+          </Router>
+        </redux.Provider>
+    );
 
-  expect(screen.getByTestId(`header`)).toBeInTheDocument();
-  expect(screen.getByTestId(`header-nav`)).toBeInTheDocument();
+    expect(screen.getByTestId(`header`)).toBeInTheDocument();
+    expect(screen.getByTestId(`header-nav`)).toBeInTheDocument();
+
+    expect(screen.getByText(`Sign in`)).toBeInTheDocument();
+  });
+
+  it(`Render 'Header' with authorization`, () => {
+    const history = createMemoryHistory();
+
+    render(
+        <redux.Provider store={mockStore({USER: {authorizationStatus: `AUTH`, authorizationInfo: {email: `test@mail.ru`}}})}>
+          <Router history={history}>
+            <Header />
+          </Router>
+        </redux.Provider>
+    );
+
+    expect(screen.getByTestId(`header`)).toBeInTheDocument();
+    expect(screen.getByTestId(`header-nav`)).toBeInTheDocument();
+
+    expect(screen.getByText(`test@mail.ru`)).toBeInTheDocument();
+    expect(screen.getByText(`Log Out`)).toBeInTheDocument();
+  });
 });
