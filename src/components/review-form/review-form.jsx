@@ -15,6 +15,8 @@ const ReviewForm = ({placeId}) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
+    const {target: form} = evt;
+
     dispatch(sendPropertyReview(placeId, commentForm));
 
     setCommentForm({
@@ -22,6 +24,8 @@ const ReviewForm = ({placeId}) => {
       rating: null,
       comment: ``
     });
+
+    form.reset();
   };
 
   const handleFieldChange = (evt) => {
